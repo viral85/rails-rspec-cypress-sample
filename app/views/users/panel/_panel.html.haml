@@ -1,0 +1,28 @@
+
+#controlPanelElementsAvailability{"data-controller" => "users--panel--elements-availability", "data-reflex-permanent"=>"true"}
+#existingCasesContainer
+  = render partial: "users/panel/panel_components/cases/existing_cases"
+#loader{"data-users--panel--state-target" => "loader", "data-reflex-permanent"=>"true"}
+  %lottie-player.relative.block.mx-auto.-mb-5{autoplay: "", background: "transparent", speed: "1", loop: "", src: "#{asset_path('loading.json')}", style: "width: 120px; height: 120px;"}
+  .text-center.mt-5.text-z-blue
+    Loading...
+#panelMessages.rounded-md.p-4.mx-10.my-5.hidden{"data-users--panel--state-target" => "messageBox" }
+  = render partial: "users/panel/panel_components/message"
+#controlPanelContent{
+  "data-users--panel--state-target" => "controlPanelContent",
+  "data-controller" => "users--panel--tabs",
+  "data-users--panel--tabs-first-tab-value" => (@user.cms_disabled? ? "participants" : "cases")
+}
+  #menuContainer.sticky.top-0.bg-white.z-50
+    = render partial: "users/panel/panel_components/menu"
+  #cases.py-4.px-4.border-l.border-b.border-r{"data-users--panel--tabs-target" => "casesPanel", class: (@active_tab == "participant" ? "hidden" : "") }
+    = render partial: "users/panel/panel_components/cases/cases"
+
+  #participants.py-4.px-4.border-l.border-b.border-r{"data-users--panel--tabs-target" => "participantsPanel", class: (@active_tab == "cases" ? "hidden" : "") }
+    #no-participants-message{ class: ("hidden" if @user.display_ungrouped_participants?), "data-cy" => "no-participants-message-container" }
+      .container.relative.z-20
+        .max-w-sm.mx-auto
+          %p.mb-1.mt-8.text-center.text-z-gray.font-light.text-lg.md:text-xl
+            There are currently no ungrouped participants in the waiting room.
+    #ungrouped-participants-content{ class: ("hidden" if !@user.display_ungrouped_participants?), "data-cy" => "ungrouped-participants-content" }
+      = render partial: "users/panel/panel_components/ungrouped_participants/upgrouped_participants"

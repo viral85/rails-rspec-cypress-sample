@@ -1,0 +1,59 @@
+.max-w-xl.mx-auto.mt-10
+  .mb-2
+    %h1.text-2xl.text-center.font-bold.mt-12.mb-1="#{@user} - Registration"
+    %p.text-center.text-z-gray.font-light.mt-1.text-lg To be part of the virtual hearing please register with your information
+
+- if @cases && @cases&.count > 1
+  .max-w-2xl.mt-5.mx-auto.animate__animated.animate__fadeIn
+    .bg-white.shadow.pt-5.pb-5.rounded-lg.py-3.mb-10.px-3.md:px-0
+      .sub-text.max-w-xl.mx-auto
+        %p.text-left.text-gray-700.font-bold.mt-2r.text-md.md:text-lg.mb-2 Multiple case match
+        %p.mb-2.text-left.text-z-gray.font-light.mt-2r.text-md.md:text-lg
+          Hi #{cookies[:first_name]} #{cookies[:last_name]},
+          %span.font-bold you have been matched to #{@cases&.count} cases
+          for this court room today. Please choose the cases you would like to be part of.
+
+- else
+  .max-w-2xl.mt-5.mx-auto.animate__animated.animate__fadeIn
+    .bg-white.shadow.pt-5.pb-5.rounded-lg.py-3.mb-10.px-3.md:px-0
+      .sub-text.max-w-xl.mx-auto
+        %p.text-left.text-gray-700.font-bold.mt-2r.text-md.md:text-lg.mb-2 No matches found
+        %p.mb-2.text-left.text-z-gray.font-light.mt-2r.text-md.md:text-lg.leading-relaxed Hi #{cookies[:first_name]} #{cookies[:last_name]}, we could not match any cases to your name. If you know your case number, please add it below. Otherwise, proceed by clicking the "I don't know my case number" button.
+
+
+%div.animate__animated.animate__fadeInUp{"data-controller" => "participants--registration"}
+  = simple_form_for @participant, url: manage_participant_path(user: @user), method: :post do |f|
+    - if @cases && @cases&.count > 1
+      .max-w-3xl.mx-auto
+        %div{class: "grid grid-cols-1 md:grid-cols-3 gap-4"}
+          - @cases.each do |found_case|
+            .bg-white.cursor-pointer.shadow.rounded-lg.px-3.py-3{class: "active:shadow-z", id: "case-#{found_case}", "data-action" => "click->participants--registration#toggleCase"}
+              %p.inline-block
+                %span.inline-block
+                  Case:
+                %span.font-bold.inline-block #{found_case}
+              %svg.inline-block.float-right{:fill => "none", :height => "24", :viewbox => "0 0 29 29", :width => "24", :xmlns => "http://www.w3.org/2000/svg"}
+                %path{:d => "M29 14.5C29 22.5081 22.5081 29 14.5 29C6.49187 29 0 22.5081 0 14.5C0 6.49187 6.49187 0 14.5 0C22.5081 0 29 6.49187 29 14.5Z", :fill => "#8F98B9", :opacity => "0.15"}
+                %path.selected_case.hidden{:d => "M9.0625 14.0298L13.4677 18.125L16.7026 14.5L19.9375 10.875", :stroke => "#8F98B9"}
+
+
+    .max-w-md.mx-auto.mt-4
+
+
+      - if @cases.nil?
+        %label.block.mt-3.text-sm.text-z-gray.font-light{:for => "case_number"} Case Number
+      %div{"data-reflex-permanent" => true}
+        %template{"data-participants--registration-target" => "template"}
+          = f.fields_for :court_cases, CourtCase.new, child_index: 'TEMPLATE_RECORD' do |court_case|
+            = render 'court_case_fields', f: court_case
+
+        - if @cases.nil?
+          = f.fields_for :court_cases, CourtCase.new do |court_case|
+            = render 'court_case_fields', f: court_case
+        %div{"data-participants--registration-target" => "addItem"}
+          = link_to "Add another case number", "#", data: { action: "participants--registration#addAssociation" }, class: "block mt-4 text-sm text-z-blue font-light underline"
+
+
+      = f.submit "Register", name: "button-a", data: {disable_with: "Registering ...", class: "opacity-50"}, id: "submit-btn", "data-cy" => "submit-btn", class: "button cursor-pointer w-full mt-5 px-14 py-4 mx-auto block leading-6 text-center text-white transition bg-z-blue rounded-md shadow ripple hover:shadow-lg hover:bg-z-blue-light focus:outline-none", disabled: false
+      - if @cases.nil?
+        = f.submit "I don't know my case number", name: "button-b", data: {disable_with: "Registering ...", class: "opacity-50"}, id: "submit-btn2", "data-cy" => "submit-btn", class: "button bg-white cursor-pointer w-full mt-5 px-14 py-4 mx-auto block leading-6 text-center text-z-blue transition border border-z-blue rounded-md shadow ripple hover:shadow-lg focus:outline-none", disabled: false

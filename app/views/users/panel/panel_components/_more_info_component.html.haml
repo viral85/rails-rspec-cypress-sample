@@ -1,0 +1,33 @@
+.more-info-menu{"data-controller" => "dropdown"}
+  .cursor-pointer.button.text-xs.text-center.mt-2.px-6.py-1.float-right.inline-block.leading-6.shadow-z.text-z-gray-lightbluish.transition.bg-white.rounded-md.ripple{
+    "data-action" => "click->dropdown#toggle click@window->dropdown#hide",
+    id: "dropdown-more-info-#{court_case.case_number}",
+    "data-cy" => "more-info-dropdown"
+  }
+    %a.w-full
+      .inline-block.mr-2 More
+      %svg.inline-block{:fill => "none", :height => "7", :viewbox => "0 0 8 5", :width => "10", :xmlns => "http://www.w3.org/2000/svg"}
+        %path{:d => "M4 4.36365L4.33787 4.0596L8 0.816442L7.32425 1.09082e-05L4 2.94477L0.67575 1.03269e-05L3.10107e-07 0.816442L3.66213 4.0596L4 4.36365Z", :fill => "#8F98B9"}
+
+    .absolute.right-0.mt-2.w-72.hidden.z-40{style: "margin-left: -25px; margin-right: 35px;", "data-dropdown-target" => "menu"}
+      .bg-white.shadow.rounded.border.overflow-hidden.rounded-lg.py-2
+        %a.text-sm.text-left.cursor-pointer.no-underline.block.px-4.py-1.text-z-blue.bg-white.hover:bg-z-blue.hover:bg-opacity-10.whitespace-no-wrap.z-40{
+          "data-action" => "click->users--panel--cases#admitAll",
+          "data-case-number" => court_case.case_number,
+          id: "admit-all-btn-#{court_case.case_number}",
+          "data-involves-zoom-sdk" => "true",
+          disabled: !user.sdk_request_available?,
+          class: (user.sdk_request_available? ? "" : "opacity-50 deactivated-link"),
+          "data-cy" => "admit-all-btn"
+        }
+          Admit All
+        %a.text-sm.text-left.cursor-pointer.no-underline.block.px-4.py-1.text-z-gray.bg-white.hover:bg-z-gray.hover:bg-opacity-10.whitespace-no-wrap.z-40{
+          "data-action" => "click->users--panel--cases#putAllInWaitingRoom",
+          "data-case-number" => court_case.case_number,
+          id: "put-all-in-waiting-room-btn-#{court_case.case_number}",
+          "data-involves-zoom-sdk" => "true",
+          disabled: !user.sdk_request_available?,
+          class: (user.sdk_request_available? ? "" : "opacity-50 deactivated-link"),
+          "data-cy" => "put-all-in-waiting-room-btn"
+        }
+          Put All in Waiting Room

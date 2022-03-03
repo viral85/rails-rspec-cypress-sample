@@ -1,0 +1,13 @@
+.rounded-md.bg-red-50.p-4.mx-10.my-5
+  .flex
+    .flex-shrink-0
+      %svg.h-5.w-5.text-red-400{"aria-hidden" => "true", fill: "currentColor", viewbox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg"}
+        %path{"clip-rule" => "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z", "fill-rule" => "evenodd"}
+    .ml-3
+      %h3.text-sm.font-medium.text-red-800
+        Zoom meeting not found
+      .mt-2.text-sm.text-red-700
+        %p
+          The Zoom meeting that xyz.io created for you was not found in your Zoom account. Click the button below to create a new meeting.
+%div.mx-10.my-5
+  = button_to "Create Zoom Meeting", create_zoom_meeting_path(current_user), method: :post, data: { cy: "create_zoom_meeting_btn", disable_with: 'Creating Zoom Meeting ...' }, class: "w-full cursor-pointer px-5 py-4 mx-auto block leading-6 text-center text-white transition bg-z-blue rounded-md shadow ripple hover:shadow-lg hover:bg-z-blue-light focus:outline-none"

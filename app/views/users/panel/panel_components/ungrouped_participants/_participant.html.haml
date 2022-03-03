@@ -1,0 +1,110 @@
+%div{id: "ungrouped-participant-#{participant.token}"}
+  .participant-container.p-5.mb-3.rounded-md.bg-z-gray-lightest{
+    "data-controller" => "users--panel--ungrouped-participant users--panel--edit-participant",
+    "data-users--panel--ungrouped-participant-target" => "participantContainer",
+    "data-participant-token" => participant.token,
+    id: "ungrouped-participant-container-#{participant.token}",
+    "data-cy" => "ungrouped-participant",
+    "data-zoom-user-id" => participant.zoom_user_id,
+    "data-zoom-username" => participant.zoom_username,
+    "data-user-active" => "false"
+  }
+    .flex.mb-2
+      .participant-info.w-24.flex-auto
+        %svg.inline-block{:fill => "none", :height => "6", :viewbox => "0 0 6 6", :width => "6", :xmlns => "http://www.w3.org/2000/svg", "data-cy" => "blue-dot-indicator"}
+          %circle{:cx => "3", :cy => "3", :fill => "#1477FB", :r => "3"}
+        %span.text-md.font-light.font-medium
+          = participant
+        %span.text-xs.font-light.text-z-gray-lightbluish.block
+          = participant.role&.humanize
+      .time-online.flex-auto
+        .time.mx-auto.block.text-center{"data-controller" => "users--panel--waiting-timer", "data-users--panel--waiting-timer-entered-at-value" => "#{participant&.entered_waiting_room_at}"}
+          %svg.inline-block{:fill => "none", :height => "10", :viewbox => "0 0 10 10", :width => "10", :xmlns => "http://www.w3.org/2000/svg"}
+            %path{:d => "M5 0C2.24307 0 0 2.24295 0 5C0 7.75705 2.24307 10 5 10C7.75705 10 10 7.75705 10 5C10 2.24295 7.75693 0 5 0ZM5 9.27008C2.64551 9.27008 0.729922 7.35449 0.729922 5C0.729922 2.64551 2.64551 0.729922 5 0.729922C7.35449 0.729922 9.27008 2.64549 9.27008 4.99988C9.27008 7.35449 7.35449 9.27008 5 9.27008Z", :fill => "#8F98B9"}
+            %path{:d => "M6.70315 4.99981H5.12165V2.81003C5.12165 2.60845 4.95827 2.44507 4.75668 2.44507C4.5551 2.44507 4.39172 2.60845 4.39172 2.81003V5.36478C4.39172 5.56636 4.5551 5.72974 4.75668 5.72974H6.70315C6.90473 5.72974 7.06811 5.56636 7.06811 5.36478C7.06811 5.16319 6.90473 4.99981 6.70315 4.99981Z", :fill => "#8F98B9"}
+          %span.text-xs.font-light.text-z-gray-lightbluish{"data-users--panel--waiting-timer-target" => "timer"}
+            = ((Time.zone.now - participant&.entered_waiting_room_at) / 60).to_i.to_s + " min"
+      -if host_panel?
+        .participant-options-btn.flex-auto.flex.flex-row-reverse.relative{"data-controller" => "dropdown"}
+          %a.cursor-pointer{
+            "data-action" => "click->dropdown#toggle click@window->dropdown#hide",
+            "data-participant_token" => participant.token, id: "dropdown-btn-participant-#{participant.token}",
+            "data-cy" => "participant-dropdown"
+          }
+            %svg.-mt-2{:fill => "none", :height => "50", :viewbox => "0 0 50 50", :width => "50", :xmlns => "http://www.w3.org/2000/svg"}
+              %g{:filter => "url(#filter0_d)"}
+                %circle{:cx => "25", :cy => "25", :fill => "white", :r => "14"}
+              %path{:d => "M25 27.3635L25.3379 27.0595L29 23.8163L28.3243 22.9999L25 25.9446L21.6757 22.9999L21 23.8163L24.6621 27.0595L25 27.3635Z", :fill => "#8F98B9"}
+              %defs
+                %filter#filter0_d{"color-interpolation-filters" => "sRGB", :filterunits => "userSpaceOnUse", :height => "50", :width => "50", :x => "0", :y => "0"}
+                  %feflood{"flood-opacity" => "0", :result => "BackgroundImageFix"}
+                  %fecolormatrix{:in => "SourceAlpha", :type => "matrix", :values => "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"}
+                  %feoffset
+                  %fegaussianblur{:stddeviation => "5.5"}
+                  %fecolormatrix{:type => "matrix", :values => "0 0 0 0 0.0784314 0 0 0 0 0.466667 0 0 0 0 0.984314 0 0 0 0.11 0"}
+                  %feblend{:in2 => "BackgroundImageFix", :mode => "normal", :result => "effect1_dropShadow"}
+                  %feblend{:in => "SourceGraphic", :in2 => "effect1_dropShadow", :mode => "normal", :result => "shape"}
+          .absolute.right-0.top-10.w-65.hidden.z-40{"data-dropdown-target" => "menu"}
+            .bg-white.shadow.rounded.border.overflow-hidden.rounded-lg.py-2
+              %a.cursor-pointer.text-sm.no-underline.block.px-4.py-1.text-z-blue.bg-white.hover:bg-z-blue.hover:bg-opacity-10.whitespace-no-wrap.z-40{
+                id: "add-ungrouped-participant-btn-participant-#{participant.token}",
+                "data-action" => "click->users--panel--participants#admitUngroupedParticipant",
+                "data-participant_token" => participant.token,
+                "data-involves-zoom-sdk" => "true",
+                disabled: !@user.sdk_request_available?,
+                class: (@user.sdk_request_available? ? "" : "opacity-50 deactivated-link"),
+                "data-cy" => "add-ungrouped-participant-btn"
+              }
+                Admit
+
+              %a.cursor-pointer.text-sm.no-underline.block.px-4.py-1.text-z-black.bg-white.hover:bg-z-blue.hover:text-z-gray.hover:bg-opacity-10.whitespace-no-wrap.z-40{
+                id: "edit-ungrouped-participant-btn-participant-#{participant.token}",
+                "data-action" => "click->users--panel--edit-participant#showEditParticipantForm click->dropdown#toggle",
+                "data-cy" => "edit-ungrouped-participant-btn"
+              }
+                Edit
+
+              %hr
+
+              %a.cursor-pointer.text-sm.no-underline.block.px-4.py-1.text-z-gray.bg-white.hover:bg-z-red.hover:bg-opacity-10.whitespace-no-wrap.z-40{
+                "data-action" => "click->users--panel--participants#removeUngroupedParticipant",
+                "data-participant_token" => participant.token,
+                id: "remove-ungrouped-participant-btn-#{participant.token}",
+                "data-involves-zoom-sdk" => "true",
+                disabled: !@user.sdk_request_available?,
+                class: (@user.sdk_request_available? ? "" : "opacity-50 deactivated-link"),
+                "data-cy" => "remove-ungrouped-participant"
+              }
+                Remove from meeting
+
+              %a.cursor-pointer.text-sm.no-underline.block.px-4.py-1.text-z-gray.bg-white.hover:bg-z-red.hover:bg-opacity-10.whitespace-no-wrap.z-40{
+                id: "remove-from-cp-ungrouped-participant-btn-participant-#{participant.token}",
+                "data-action" => "click->users--panel--participants#removeUngroupedParticipantFromPanel",
+                "data-participant_token" => participant.token,
+                "data-involves-zoom-sdk" => "false",
+                "data-cy" => "remove-from-cp-ungrouped-participant-btn"
+              }
+                Remove from control panel
+    -if host_panel?
+      = render partial: "users/panel/panel_components/ungrouped_participants/edit_participant", locals: { participant: participant }
+      %div{"data-users--panel--edit-participant-target" => "assignCaseForm", "data-reflex-permanent" => "true"}
+        .flex.justify-center.mt-5
+          %span.text-xs.font-semibold.text-z-gray-lightbluish
+            Assign Case Number
+        %div
+          %template{"data-users--panel--ungrouped-participant-target" => "template"}
+            = render 'users/panel/panel_components/ungrouped_participants/court_case_fields', participant: participant, need_remove_button: true
+          = render 'users/panel/panel_components/ungrouped_participants/court_case_fields', participant: participant, need_remove_button: false
+          %div{"data-users--panel--ungrouped-participant-target" => "addItem"}
+            = link_to "Add another case number", "#", data: { action: "users--panel--ungrouped-participant#addAssociation", "participant" => participant.token }, class: "block mt-2 text-sm text-z-blue font-light underline"
+          %button.w-full.h-10.mt-2.text-sm.mx-auto.block.leading-6.shadow-z.text-center.text-white.transition.bg-z-blue.rounded-md.ripple.hover:shadow-lg.opacity-50{
+            id: "assign-btn-#{participant.token}",
+            "data-users--panel--ungrouped-participant-target" => "assignButton",
+            "data-action" => "click->users--panel--participants#assignCase",
+            "data-participant_token" => participant.token,
+            "data-involves-zoom-sdk" => "false",
+            "data-cy" => "assign-participant-btn",
+            "data-valid" => "false",
+            disabled: true
+          }
+            Assign

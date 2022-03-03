@@ -1,0 +1,45 @@
+#share-view{"data-controller"=>"users--share-view"}
+
+  - if @user.present? && @user.panel.sharing_enabled?
+
+    .container.relative.z-20
+      .py-5.px-5.block.max-w-lg.mx-auto
+        %img.h-8.w-auto{:alt => "xyz.io logo", :src => "https://app.xyz.io/logo.svg"}/
+      .max-w-lg.mx-auto{:style => "\r\n    padding: 20px 15px 25px 25px;\r\n"}
+        %h1.text-xl.text-left.font-medium.mt-1
+          Welcome to xyz.io!
+        %h2.text-md.text-left.text-gray-500{"data-cy" => "meeting_id"}
+          #{@user} has shared their control panel with you. You can view #{@user.first_name}’s control panel but will not be able to take any actions.
+      .max-w-md.mx-auto.mt-3
+        .bg-white.shadow-z.rounded-lg.py-5
+          %h1.text-xl.text-center.font-bold.mt-8
+            #{@user}
+          %h2.text-lg.text-center.text-gray-500{"data-cy" => "meeting_id"}
+            %span.font-bold Meeting ID:
+            #{@user.zoom_meeting.meeting_id}
+          #meeting_topic_title.px-3
+            %h2.text-lg.text-center.text-gray-500
+              %span.font-bold Topic:
+              #{@user.zoom_meeting.topic}
+
+          .mt-6.mb-8.px-8
+            = render partial: "users/shared/registration_page_input",  locals: { user: @user }
+          %a.mb-10.block
+            %button.px-5.py-4.mx-auto.block.leading-6.text-center.text-white.transition.bg-z-blue.rounded-md.shadow.ripple.sm:px-14.hover:shadow-lg.hover:bg-z-blue-light.focus:outline-none{:href => "#", :onclick => "javascript:window.open('/shared-panel', 'Panel', 'menubar=1, resizable=1, width=400, height=1000');"}
+              Launch Control Panel
+
+  - else
+
+    .container.relative.z-20.pt-10
+      .bg-white.shadow-z.rounded-lg.max-w-2xl.mx-auto.py-5.px-5{:style => "\r\n    padding: 20px 15px 25px 25px;\r\n"}
+        .flex.items-start
+          .flex-shrink-0
+            %svg.h-6.w-6.text-z-red{:fill => "none", :stroke => "currentColor", :viewbox => "0 0 24 24", :xmlns => "http://www.w3.org/2000/svg"}
+              %path{:d => "M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z", "stroke-linecap" => "round", "stroke-linejoin" => "round", "stroke-width" => "2"}
+            %path{:d => "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z", "stroke-linecap" => "round", "stroke-linejoin" => "round", "stroke-width" => "2"}
+          .ml-3.w-0.flex-1{:class => "pt-0.5"}
+            %h1.text-md.font-medium.text-gray-900
+              Share link not valid
+            %p.mt-1.text-gray-500
+              We are sorry, your share link is not valid. This could be an issue with the URL or the
+              host has disabled the link.

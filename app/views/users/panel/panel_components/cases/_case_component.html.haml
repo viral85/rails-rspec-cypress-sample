@@ -1,0 +1,68 @@
+.case-container.p-5.mb-3.rounded-md{
+  id: "#{"searched-" if @searched}case-#{court_case.case_number}",
+  class: "#{@searched ? 'bg-white' : 'bg-z-gray-lightest'}",
+  "data-cy" => "case-container"
+}
+  .case-info.mt-1.pb-3.flex.border-b.border-z-gray.border-opacity-10
+    .case-name.flex-1
+      %h1.text-xl.font-medium{"data-cy" => "case-number"}
+        = "Case #{court_case.case_number}"
+      #participants-count{"data-cy" => "participants-count"}
+        = render partial: "users/panel/panel_components/cases/participants_count_component", locals: { in_meeting_room_count: court_case.participants_in_meeting_room.count, in_waiting_room_count: court_case.participants_in_waiting_room.count }
+
+    .participants-options.flex-1
+      -if host_panel?
+        %a.block.mt-1.text-xs.text-z-blue.font-light.underline.text-right.cursor-pointer{
+          "data-action" => "click->users--panel--host-panel#toggleViewCasesParticipants",
+          "data-case_number" => court_case.case_number,
+          "data-involves-zoom-sdk" => "false",
+          "data-cy" => "toggle-participants-list-btn"
+        }
+          - if court_case.participants_list_expended?
+            = "Hide Participants"
+          - else
+            = "View Participants"
+        = render partial: "users/panel/panel_components/more_info_component", locals: { |
+          court_case: court_case, |
+          user: @user }
+
+  .participant-list.mt-4{
+    id: "#{"searched-" if @searched}participants-list-#{court_case.case_number}",
+    "data-cy" => "participants-list-container",
+    class: "#{'hidden' if !court_case.participants_list_expended? && host_panel?}"
+  }
+    - court_case.participants_in_meeting_room.each do |participant|
+      = render partial: "users/panel/panel_components/cases/participant", locals: { |
+        participant: participant, |
+        attendance: court_case.attendances.find_by(participant: participant), |
+        court_case: court_case }
+    - court_case.participants_in_waiting_room.each do |participant|
+      = render partial: "users/panel/panel_components/cases/participant", locals: { |
+        participant: participant, |
+        attendance: court_case.attendances.find_by(participant: participant), |
+        court_case: court_case }
+  -if host_panel?
+    - start_case_availability = @user.has_no_active_case? && @user.sdk_request_available?
+    %button.start-btn.w-full.mt-4.px-14.py-3.mx-auto.block.leading-6.shadow-z.text-center.text-white.transition.bg-z-blue.rounded-md.ripple.hover:shadow-lg.hover:bg-z-blue-light.focus:outline-none{
+      "data-action" => "click->users--panel--cases#startCase",
+      "data-case_number" => court_case.case_number,
+      id: "#{"searched-" if @searched}start-btn-#{court_case.case_number}",
+      "data-involves-zoom-sdk" => "true",
+      "data-start-case-btn" => "true",
+      disabled: !start_case_availability,
+      class: (start_case_availability ? "" : "opacity-50 deactivated-link"),
+      "data-cy" => "start-case-btn"
+    }
+      Start Case
+
+  %button.hidden.w-full.mt-4.px-14.py-3.mx-auto.block.leading-6.shadow-z.text-center.text-white.transition.bg-z-blue.rounded-md.ripple.hover:shadow-lg.hover:bg-z-blue-light.focus:outline-none{
+    "data-case_number" => court_case.case_number,
+    id: "#{"searched-" if @searched}disabled-start-btn-#{court_case.case_number}",
+    disabled: true
+  }
+    %svg.inline-block{:fill => "none", :height => "16", :viewbox => "0 0 16 16", :width => "16", :xmlns => "http://www.w3.org/2000/svg"}
+      %path{:d => "M16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8Z", :fill => "white", :opacity => "0.4"}
+      %path{:d => "M5 7.74059L7.43045 10L9.21522 8L11 6", :stroke => "white"}
+    .ml-1.inline-block Starting the case
+
+

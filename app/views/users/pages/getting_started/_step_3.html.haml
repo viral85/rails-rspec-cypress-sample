@@ -1,0 +1,65 @@
+%div.p-4.rounded-md.bg-z-blue-lightest.mt-10{
+  "data-users--onboarding-target" => "step3Container",
+  class: "#{'border border-z-blue' if !@step3_completed && @step2_completed}",
+  "data-step_completed" => @step3_completed.to_s
+}
+  .grid.grid-cols-3.gap-4.cursor-pointer{
+    "data-action" => "click->users--onboarding#handleStepClick",
+    "data-step_number" => "3"
+  }
+    .col-start-1.col-span-4.md:col-span-2.flex
+      %span.text-z-gray-lightbluish.bg-z-gray-creamybluish.rounded-full.h-7.w-7.flex.items-center.justify-center
+        %svg.h-5.w-5{
+          "data-users--onboarding-target" => "step3Checkmark",
+          :fill => "none", :stroke => "currentColor", :viewbox => "0 0 24 24", :xmlns => "http://www.w3.org/2000/svg",
+          class: "#{'hidden' unless @step3_completed}"
+        }
+          %path{:d => "M5 13l4 4L19 7", "stroke-linecap" => "round", "stroke-linejoin" => "round", "stroke-width" => "2"}
+        %span{"data-users--onboarding-target" => "step3Number", class: "#{'hidden' if @step3_completed}"}
+          3
+      %span.ml-5.mt-1{
+        "data-users--onboarding-target" => "step3Header",
+        class: "#{@step3_completed ? 'text-gray-500 font-normal' : 'font-medium'}"
+      }
+        Get to know the control panel features
+    .col-end-5.flex.invisible.md:visible
+      %span.text-gray-500
+        about 10 minutes
+      %span.ml-2.text-gray-500.transform{
+        class: "#{'rotate-90' if @step2_completed && !@step3_completed}",
+        "data-users--onboarding-target" => "step3Toggler"
+      }
+        %svg.h-6.w-6{:fill => "none", :stroke => "currentColor", :viewbox => "0 0 24 24", :xmlns => "http://www.w3.org/2000/svg"}
+          %path{:d => "M9 5l7 7-7 7", "stroke-linecap" => "round", "stroke-linejoin" => "round", "stroke-width" => "2"}
+  .container.ml-4.bg-z-blue-lightest.transition-all.transform.duration-700.overflow-hidden{
+    "data-users--onboarding-target" => "step3Body",
+    class: "#{!@step3_completed && @step2_completed ? 'max-h-192' : 'max-h-0'}"
+  }
+    .grid.grid-cols-2.gap-4.pt-10
+      %div
+        %p.mb-10 The control panel is where you will be managing all of your participants when they arrive. You can group them into cases and start and end cases with a click of a button. For this, we recommend you share your registration link with a few of your team members and ask them to join your meeting while you explore the different features in the control panel.
+        
+        %p Your registration link:
+        .pr-8
+          = render partial: "users/shared/registration_page_input",  locals: { user: current_user }
+       
+        %a.mt-6.block
+          %button.px-4.py-3.leading-6.text-center.text-z-blue.transition.bg-white.border.border-z-blue.rounded-md.shadow.ripple.hover:shadow-lg.hover:bg-z-gray-lightest.focus:outline-none{:href => "#", :onclick => "javascript:window.open('/panel', 'Panel', 'menubar=1, resizable=1, width=400, height=1000');"}
+            Launch your control panel
+        %a.mt-4.mb-8.block
+          %button.px-6.py-3.leading-6.text-center.text-white.transition.bg-z-blue.rounded-md.shadow.ripple.hover:shadow-lg.hover:bg-z-blue-light.focus:outline-none{
+            "data-action" => "click->users--onboarding#completeStep",
+            "data-step_number" => "3",
+            "data-cy" => "complete-step-3",
+            "data-users--onboarding-target" => "step3CompleteBtn",
+            class: "#{'hidden' if @step3_completed}"
+          }
+            Complete this step
+      %div.relative
+        .max-w-md.w-full.float-right
+          %script{:async => "", :src => "https://fast.wistia.com/embed/medias/m4rdzfaaif.jsonp"}
+          %script{:async => "", :src => "https://fast.wistia.com/assets/external/E-v1.js"}
+          .wistia_responsive_padding{:style => "padding:56.25% 0 0 0;position:relative;"}
+            .wistia_responsive_wrapper{:style => "height:100%;left:0;position:absolute;top:0;width:100%;"}
+              %span.wistia_embed.wistia_async_m4rdzfaaif{:class => "popover=true popoverAnimateThumbnail=true videoFoam=true", :style => "display:inline-block;height:100%;position:relative;width:100%"}  
+

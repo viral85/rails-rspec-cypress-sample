@@ -1,0 +1,43 @@
+- if @zoom_meeting.meets_prerequisites?
+  %div{class: "max-w-xl mx-auto sm:mt-10"}
+    .mb-2
+      %h1{class:"text-2xl text-center font-bold mb-1 mt-6 sm:mt-12"}
+        ="#{@user&.zoom_meeting&.topic} - #{t 'reg.title'}"
+      - unless @user.user_settings.hide_subtitle?
+        %p.text-center.text-z-gray.font-light.mt-1.text-lg
+          =t "reg.subtitle"
+
+  .max-w-md.mx-auto.animate__animated.mb-20.animate__fadeIn{"data-controller" => "participants--registration"}
+    .p-1
+      = simple_form_for @participant do |f|
+
+        %svg.animate-spin.h-5.w-5.mr-3.text-black{viewBox:"0 0 24 24"}
+
+        = f.label :first_name, label: t("reg.first_name"), class: "block text-sm text-z-gray font-light", required: false
+        = f.text_field :first_name, title: t("reg.first_name_tooltip"), class: "block w-full p-3 mt-1 text-gray-700 appearance-none rounded border border-gray-200 focus:border-2 focus:border-z-blue", id: "first-name", autocomplete: "first_name", :required => true, "data-action"=>"input->participants--registration#validateField blur->participants--registration#validateField", value: flash[:alert].present? ? cookies[:first_name] : ""
+        %p#first-name-error.invalid-notice.block.mt-1.mb-2.text-sm.text-z-red.font-light.hidden First name is required
+        %p#first-name-error2.invalid-notice.block.mt-1.mb-2.text-sm.text-z-red.font-light.hidden First name cannot start with a blank space
+
+        = f.label :last_name, label: t("reg.last_name"), class: "mt-3 block text-sm text-z-gray font-light", required: false
+        = f.text_field :last_name, title: t("reg.last_name_tooltip"), class: "block w-full p-3 mt-1 text-gray-700 appearance-none rounded border border-gray-200 focus:border-2 focus:border-z-blue", id: "last-name", autocomplete: "last_name", :required => true, "data-action"=>"input->participants--registration#validateField blur->participants--registration#validateField", value: flash[:alert].present? ? cookies[:last_name] : ""
+        %p#last-name-error.invalid-notice.block.mt-1.mb-2.text-sm.text-z-red.font-light.hidden Last name is required
+        %p#last-name-error2.invalid-notice.block.mt-1.mb-2.text-sm.text-z-red.font-light.hidden Last name cannot start with a blank space
+
+        = f.label t("reg.role"), class: "mt-3 block text-sm text-z-gray font-light", required: false
+        = f.input :role, label: false, required: true, collection: @role_options, label_method: :second, value_method: :first, prompt: t("reg.role_prompt"), input_html: {title: t("reg.role_tooltip"), "data-cy" => "role-input", id: "role", class: "block w-full p-3 mt-1 text-gray-700 appearance-none rounded border border-gray-200 focus:border-2 focus:border-z-blue", "data-action"=>"input->participants--registration#validateField blur->participants--registration#validateField" }, selected: flash[:alert].present? ? cookies[:role] : ""
+        %svg.relative.mr-5.float-right{:style => "top:-35px;", :fill => "none", :height => "20", :viewbox => "0 0 11 20", :width => "11"}
+          %path{:d => "M5.5 0L5.03542 0.418063L0 4.87741L0.929155 6L5.5 1.95096L10.0708 6L11 4.87741L5.96458 0.418063L5.5 0Z", :fill => "#39394B"}
+          %path{:d => "M5.5 20L5.96458 19.5819L11 15.1226L10.0708 14L5.5 18.049L0.929156 14L4.26396e-07 15.1226L5.03542 19.5819L5.5 20Z", :fill => "#39394B"}
+        %p#role-error.invalid-notice.block.mt-1.mb-2.text-sm.text-z-red.font-light.hidden Role is required
+
+        =f.input :locale, as: :hidden, input_html:{value: t("locale")}
+
+        = f.submit t("reg.submit"), data: {disable_with: "Registering ...", class: "opacity-50"}, id: "submit-btn", "data-cy" => "submit-btn", class: "button cursor-pointer w-full mt-5 px-14 py-4 mx-auto block leading-6 text-center text-white transition bg-z-blue rounded-md shadow ripple hover:shadow-lg hover:bg-z-blue-light focus:outline-none", disabled: true
+- else
+  %div{class: "rounded-md bg-red-50 p-4 mb-2 max-w-xl mx-auto sm:mt-10"}
+    %h1.text-center.font-medium.text-red-800.mb-5.text-xl
+      Registration page disabled
+    %p.text-center.font-regular.text-red-800.text-lg
+      We are sorry but this registration page has been disabled.
+      %br
+      If you are the owner please log in for more information.

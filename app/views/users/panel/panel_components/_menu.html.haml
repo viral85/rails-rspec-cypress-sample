@@ -1,0 +1,26 @@
+#controlPanelElementsAvailabilityContainer
+  = render partial: "users/panel/panel_components/availability_component"
+%ul.pt-5.list-reset.flex.border-b
+  - if @user.cms_disabled?
+    %li#participantsTab.pr-3.mr-1.cursor-pointer{"data-users--panel--tabs-target" => "participantsTab", class: (@active_tab == "participant" ? "-mb-px border-l border-t border-r rounded-t bg-white" : "bg-z-gray-lightest text-gray-500"), "data-cy" => "participants-tab" }
+      = render partial: "users/panel/panel_components/ungrouped_participants/participants_tab"
+    %li#casesTab{"data-users--panel--tabs-target" => "casesTab", class: (@active_tab == "cases" ? "-mb-px border-l border-t border-r rounded-t bg-white" : "bg-z-gray-lightest text-gray-500"), "data-cy" => "cases-tab" }
+      = render partial: "users/panel/panel_components/cases/cases_tab"
+  - else
+    %li#casesTab{"data-users--panel--tabs-target" => "casesTab", class: (@active_tab == "cases" ? "-mb-px border-l border-t border-r rounded-t bg-white" : "bg-z-gray-lightest text-gray-500"), "data-cy" => "cases-tab" }
+      = render partial: "users/panel/panel_components/cases/cases_tab"
+    %li#participantsTab.pr-3.mr-1.cursor-pointer{"data-users--panel--tabs-target" => "participantsTab", class: (@active_tab == "participant" ? "-mb-px border-l border-t border-r rounded-t bg-white" : "bg-z-gray-lightest text-gray-500"), "data-cy" => "participants-tab" }
+      = render partial: "users/panel/panel_components/ungrouped_participants/participants_tab"
+
+#loadingSdkRequestStatus.h-8.mt-1{class: (@user.sdk_request_available? ? "hidden" : "")}
+  #loader{"data-users--panel--host-panel-target" => "loader", "data-reflex-permanent"=>"true"}
+    .inline-flex.items-center.ml-4.mt-2.px-3.h-8.rounded-lg.bg-z-blue-light
+      %lottie-player.mr-3{autoplay: "", background: "transparent", speed: "1", loop: "", src: "#{asset_path('white-loading.json')}", style: "width: 18px; height: 18px;"}
+      .text-white.text-xs.font-semibold{class: "pt-0.5"}
+        Zoom is processing your requests...
+#reconnectingWebsocketsStatus.h-8.mt-1{class: "hidden"}
+  #reconnectLoader{"data-reflex-permanent"=>"true"}
+    .inline-flex.items-center.ml-4.mt-2.px-3.h-8.rounded-lg.bg-z-blue-light
+      %lottie-player.mr-3{autoplay: "", background: "transparent", speed: "1", loop: "", src: "#{asset_path('white-loading.json')}", style: "width: 18px; height: 18px;"}
+      .text-white.text-xs.font-semibold{class: "pt-0.5"}
+        Connection lost, reconnecting... Please wait.

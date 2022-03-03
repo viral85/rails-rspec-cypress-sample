@@ -1,0 +1,14 @@
+%h1.text-lg.md:text-xl.font-bold.mb-2 Search
+%input#search-input.mb-3.pl-8.px-3.w-full.bg-z-gray-lightest.overflow-hidden.leading-9.rounded-md.text-z-gray.text-xs.font-light.h-10.focus:border-z-blue{
+  type: "text",
+  placeholder: "Search by case number",
+  "data-action"=>"debounced:input->users--panel--search#filterUpcomingCourtCases focus->users--panel--search#SetGrayInSearch blur->users--panel--search#SetWhiteInSearch",
+  value: search_query,
+  "data-reflex-permanent" => "true",
+  "data-involves-zoom-sdk" => "false",
+  "data-cy" => "search-input"
+}
+%svg.absolute.ml-3{
+  style: "margin-top: -38px;", height: "12", viewbox: "0 0 13 12", width: "13", xmlns: "http://www.w3.org/2000/svg"
+}
+  %path{:d => "M12.1656 11.1474L8.83741 7.7349C9.48209 6.91842 9.87025 5.88092 9.87025 4.75094C9.87025 2.13196 7.79188 0.000976562 5.23758 0.000976562C2.68327 0.000976562 0.604919 2.13194 0.604919 4.75092C0.604919 7.36989 2.68329 9.50088 5.2376 9.50088C6.33968 9.50088 7.35156 9.10289 8.14788 8.44189L11.4761 11.8544C11.5712 11.9519 11.696 12.0009 11.8209 12.0009C11.9457 12.0009 12.0706 11.9519 12.1656 11.8544C12.3563 11.6589 12.3563 11.3429 12.1656 11.1474ZM5.2376 8.50088C3.22067 8.50088 1.58023 6.8189 1.58023 4.75092C1.58023 2.68293 3.22067 1.00095 5.2376 1.00095C7.25452 1.00095 8.89497 2.68293 8.89497 4.75092C8.89497 6.8189 7.2545 8.50088 5.2376 8.50088Z", :fill => "#8F98B9"}

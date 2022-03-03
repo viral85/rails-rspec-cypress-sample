@@ -1,0 +1,6 @@
+- upcoming_cases = @user&.pending_cases_with_active_participants
+%h1#upcoming-cases-label.text-lg.md:text-xl.font-bold.mt-5.mb-2{ class: "#{'hidden' if upcoming_cases.blank? }" }
+  Upcoming Cases
+- if upcoming_cases&.present?
+  - upcoming_cases&.each do |court_case|
+    = render partial: "users/panel/panel_components/cases/case_component", locals: { court_case: court_case }

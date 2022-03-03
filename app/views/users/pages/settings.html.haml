@@ -1,0 +1,162 @@
+.max-w-7xl.mx-auto.mt-5{"data-controller" => "users--settings"}
+  .bg-white.shadow-z.rounded-lg.px-5.py-6x
+
+    #settings
+
+      #instructions.py-6.mb-7.border-b.border-grey-light
+        .max-w-lg
+          .title
+            %h1.text-xl.font-semibold.mb-2
+              Registration Page Settings
+          .instruction-text.mb-5
+            %p.text-md.text-gray-500{"data-cy" => "meeting_id"}
+              Customize your registration page by uploading a custom logo for your court or modifying the default
+              roles to better fit your court's roles.
+
+          .pr-8
+            = render partial: "users/shared/registration_page_input",  locals: { user: @user }
+
+      #meeting-topic.pb-6.mb-7.border-b.border-grey-light
+        .grid.grid-cols-6.gap-1
+
+          %h1.text-md.font-semibold.mb-2.col-span-1
+            Meeting Topic/Title
+
+
+          .meeting-form.col-span-5
+
+
+            .flex{
+              "data-users--settings-target" => "topicTitle"
+
+            }
+              %h2.text-lg.text-center{style: "max-width:275px;", "data-cy" => "topicTitle"}
+                =@user&.zoom_meeting&.topic
+              .flex-1
+                %btn.cursor-pointer.px-5.py-1.ml-1.inline-block.text-xs.text-gray-400.border.border-grey-light.rounded-md.hover:bg-z-gray-lightest{
+                  "data-users--settings-target" => "topicEditBtn",
+                  "data-action" => "click->users--settings#topicEditMode",
+                  "data-cy" => "topic-edit-btn"
+                }
+                  %svg.opacity-50.inline-block{:height => "15", :viewbox => "0 0 28 28", :width => "15", :xmlns => "http://www.w3.org/2000/svg"}
+                    %path{:d => "M18.308 0l-16.87 16.873-1.436 7.127 7.125-1.437 16.872-16.875-5.691-5.688zm-15.751 21.444l.723-3.585 12.239-12.241 2.861 2.862-12.239 12.241-3.584.723zm17.237-14.378l-2.861-2.862 1.377-1.377 2.861 2.861-1.377 1.378z"}
+                  Edit
+
+            #meeting_topic_form.hidden{"data-users--settings-target" => "topicForm", "data-cy" => "topic-form"}
+              %div{class: "h-10 -mt-2 w-3/4 h-auto max-w-md"}
+                %input.w-full.block.p-3.text-gray-700.h-10.rounded.border.border-gray-200.focus:border-2.focus:border-z-blue{
+                  :type => "text",
+                  "value" => @zoom_meeting&.topic,
+                  "data-action" => "input->users--settings#validateTopicTitle",
+                  "data-users--settings-target" => "topicInput",
+                  "data-participant-token" => @user.token,
+                  "data-cy" => "topic-input"
+                }
+
+                .topic-buttons.mt-2.mb-8.text-right
+                  %a.cursor-pointer.px-5.py-1.inline-block.text-xs.text-white.rounded-md.inline-block.bg-z-green-dark.w-20.text-center.mx-2.hover:bg-z-green{
+                    "data-users--settings-target" => "topicSave",
+                    "data-action" => "click->users--settings#saveTopic",
+                    "data-user" => @user,
+                    :id => "saveTopicBtn",
+                    "data-cy" => "topic-update-btn"
+                  }
+                    Save
+
+                  %btn.cursor-pointer.px-5.py-1.inline-block.text-xs.text-gray-400.border.border-grey-light.rounded-md.inline-block.text-center.hover:bg-z-gray-lightest{
+                    "data-users--settings-target" => "topicCancel",
+                    "data-action" => "click->users--settings#cancelTopicEditMode"
+                  }
+                    Cancel
+
+                %p.text-right.hidden.invalid-title-notice.block.-mt-4.mb-2.text-sm.text-z-red.font-light.font-bold
+                  = "Invalid Topic Title"
+
+      #logo.pb-6.mb-7.border-b.border-grey-light{"data-controller" => "users--upload-logo", "data-users--upload-logo-remove-logo-message-value" => "Are you sure you want to remove your logo? The default organization logo will be displayed instead."}
+        .flex.-mx-2
+          .px-2{:class => "w-2/12 justify-center.items-center"}
+            %h1.text-md.font-semibold.mb-2
+              Logo
+            %p.text-xs.text-gray-500.mt-2
+              PNG or JPG file under 10MB.
+              Recommended size: 200 by 200 pixels.
+          .px-2{:class => "w-1/12"}
+            .h-auto{:height => "15", :width => "15"}
+              %ul.h-full.w-full{"data-users--upload-logo-target" => "gallery"}
+                %li.h-full.w-full{"data-users--upload-logo-target" => "initialLogo"}
+                  = render "logo"
+
+          .px-2{:class => "w-4/12"}
+            %main.container.mx-auto.max-w-screen-lg.h-full.flex.items-center
+              = form_with model: current_user.user_settings, url: upload_logo_path, method: :post, data: { "users--upload-logo-target" => "uploadLogoForm" } do |f|
+                = f.file_field :logo, class: 'hidden', data: { action: "change->users--upload-logo#previewLogo", "users--upload-logo-target" => "logoField" }
+                %span.cursor-pointer.ml-5.bg-transparent.text-z-blue.py-2.px-4.border.border-z-blue.rounded{"data-action" => "click->users--upload-logo#openFileUploder", "data-users--upload-logo-target" => "changeLogoBtn"}
+                  Change your logo
+                %p.invalid-notice.block.text-sm.text-z-red.font-light.font-bold.col-span-10.ml-5.mt-2{"data-users--upload-logo-target" => "invalidNotice"}
+
+            %br
+
+            %template{"data-users--upload-logo-target" => "imageTemplate"}
+              %li.block.h-full.w-full
+                %article.group.hasImage.w-full.h-full.rounded-md.focus:outline-none.focus:shadow-outline.bg-gray-100.cursor-pointer.relative.text-transparent.hover:text-white.shadow-sm{:tabindex => "0"}
+                  %img.img-preview.w-full.h-full.sticky.object-cover.rounded-md.bg-fixed{:alt => "upload preview"}/
+                  %section.flex.flex-col.rounded-md.text-xs.break-words.w-full.h-full.z-20.absolute.top-0.py-2.px-3
+                    %h1.flex-1
+                    .flex
+                      %span.p-1
+                        %i
+                          %svg.fill-current.w-4.h-4.ml-auto.pt-{:height => "24", :viewbox => "0 0 24 24", :width => "24", :xmlns => "http://www.w3.org/2000/svg"}
+                            %path{:d => "M5 8.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5zm9 .5l-2.519 4-2.481-1.96-4 5.96h14l-5-8zm8-4v14h-20v-14h20zm2-2h-24v18h24v-18z"}
+                      %p.p-1.size.text-xs
+                      %button.delete.ml-auto.focus:outline-none.hover:bg-gray-300.p-1.rounded-md
+                        %svg.pointer-events-none.fill-current.w-4.h-4.ml-auto{:height => "24", :viewbox => "0 0 24 24", :width => "24", :xmlns => "http://www.w3.org/2000/svg"}
+                          %path.pointer-events-none{:d => "M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z"}
+
+      #roles.pb-6.mb-7.border-b.border-grey-light
+        .grid.grid-cols-6.gap-1
+
+          %h1.text-md.font-bold.mb-2
+            Roles
+
+          .roles-div.col-span-5.pr-10.hidden.lg:block
+
+            - if @roles.count < 3
+              .rounded-md.bg-yellow-50.p-4.mb-5{"data-cy" => "rolesErrorMessage"}
+                .flex
+                  .flex-shrink-0
+                    / Heroicon name: solid/exclamation
+                    %svg.h-5.w-5.text-yellow-400{"aria-hidden" => "true", :fill => "currentColor", :viewbox => "0 0 20 20", :xmlns => "http://www.w3.org/2000/svg"}
+                      %path{"clip-rule" => "evenodd", :d => "M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z", "fill-rule" => "evenodd"}
+                  .ml-3
+                    %h3.text-sm.font-medium.text-yellow-800
+                      Your roles are not being displayed on your registration page
+                    .mt-2.text-sm.text-yellow-700
+                      %p
+                        Your organization default roles are being shown on your registration page because you have less than 3 roles defined.
+                        Please add 3 or more roles to have your custom roles appear on your registration page.
+
+            .language-labels.grid.grid-cols-2.gap-1.ml-5
+              %h1.text-md.font-bold.mb-2
+                English Roles
+
+              %h1.text-md.font-bold.mb-2
+                Spanish Roles (Optional)
+
+
+            #role-list{"data-users--settings-target" => "roleList", "data-cy" => "roleList"}
+              = render partial: "users/pages/settings_components/role_list", locals: { roles: @roles }
+
+            #new-role-list{"data-users--settings-target" => "newRoleList"}
+              = render partial: "users/pages/settings_components/role", locals: { role: @user.user_roles.build, new_role: true }
+
+          .rounded-md.col-span-5.bg-red-50.p-4.block.lg:hidden
+            .flex
+              .flex-shrink-0
+                / Heroicon name: solid/x-circle
+                %svg.h-5.w-5.text-red-400{"aria-hidden" => "true", :fill => "currentColor", :viewbox => "0 0 20 20", :xmlns => "http://www.w3.org/2000/svg"}
+                  %path{"clip-rule" => "evenodd", :d => "M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z", "fill-rule" => "evenodd"}
+              .ml-3
+                %h3.text-sm.font-medium.text-red-800
+                  Browser too small
+                .mt-2.text-sm.text-red-700
+                  %p Your roles cannot be manged because your browser is too small. Please resize your browser to edit your roles.

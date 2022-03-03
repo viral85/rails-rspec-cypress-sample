@@ -1,0 +1,25 @@
+.nested-fields{"data-reflex-permanent" => true}
+  .flex.justify-between
+    %div{class: "h-10 mt-2 w-4/6", "data-controller" => "users--panel--autocomplete"}
+      %div{
+        "data-users--panel--autocomplete-target" => "container"
+      }
+        %input.w-full.case-number-input.block.p-3.text-gray-700.h-10.appearance-none.rounded.border.border-gray-200.focus:border-2.focus:border-z-blue#TEMPLATE_RECORD{
+          "data-users--panel--autocomplete-target" => "field",
+          :type => "text",
+          "data-action"=>"input->users--panel--ungrouped-participant#validateCourtCaseField focus->users--panel--ungrouped-participant#updateIndexes",
+          "data-participant-token" => participant.token,
+          "data-cy" => "assign-participant-input"
+        }
+      %input#TEMPLATE_RECORD{:type => "hidden", "data-action"=>"input->users--panel--ungrouped-participant#validateCourtCaseField blur->users--panel--ungrouped-participant#validateCourtCaseField", "data-participant_token" => participant.token}/
+      %ul.relative.rounded.border.border-gray-100.opacity-95.z-40#TEMPLATE_RECORD
+    - if need_remove_button
+      %div{class: "remove-button md:block mt-5 w-2/6 cursor-pointer", "data-action" => "click->users--panel--ungrouped-participant#removeAssociation"}
+        %p.block.ml-2.float-right.text-sm.text-z-red.font-light.inline-block Remove
+        %svg.block.float-right.inline-block{:fill => "none", :height => "20", :viewbox => "0 0 20 20", :width => "20", :xmlns => "http://www.w3.org/2000/svg"}
+          %path{:d => "M20 10C20 15.5228 15.5228 20 10 20C4.47715 20 0 15.5228 0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10Z", :fill => "#FA6949", :opacity => "0.2"}
+          %rect{:height => "6.5", :stroke => "#FA6949", "stroke-width" => "0.5", :transform => "rotate(45 12.1213 7.47416)", :width => "0.5", :x => "12.1213", :y => "7.47416"}
+          %rect{:height => "6.5", :stroke => "#FA6949", "stroke-width" => "0.5", :transform => "rotate(135 12.4753 12.0713)", :width => "0.5", :x => "12.4753", :y => "12.0713"}
+  %ul.list-disc.list-inside
+    %li.invalid-notice.mt-1.text-xs.font-semibold.text-z-red.hidden{class: "input-error input-error-not-valid"} The case number is not valid
+    %li.invalid-notice.mt-1.text-xs.font-semibold.text-z-red.hidden{class: "input-error input-error-case-ended"} Cannot assign this case number because this case has already ended for the day.

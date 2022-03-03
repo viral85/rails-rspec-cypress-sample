@@ -1,0 +1,33 @@
+%div{class: "bg-white flex-col items-center border-2 box-border m-auto mt-5 rounded text-center w-2/5 shadow-md rounded-md #{cookies[:xyz_uninstall] ? 'p-12' : 'p-28'}", style:"min-width: 500px;"}
+  - if cookies[:xyz_uninstall]
+    .rounded-md.bg-red-50.p-4.my-5
+      .flex
+        .flex-shrink-0
+          %svg.h-5.w-5.text-red-400{"aria-hidden" => "true", fill: "currentColor", viewbox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg"}
+            %path{"clip-rule" => "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z", "fill-rule" => "evenodd"}
+        .ml-3
+          %h3.text-sm.font-medium.text-red-800
+            xyz.io has been uninstalled
+          .mt-2.text-sm.text-red-700.text-left
+            %p
+              It seems like you have uninstalled the app through Zoom. 
+              xyz.io can no longer manage your Zoom meetings,
+              your Zoom meeting registrations, or receive your meeting activity.
+            %br
+            %p
+              Your registration page is no longer accessible.
+              People you have shared your registration link with will no
+              longer be able to register for your Zoom meeting.
+              If you would like to undo these changes, simply log back in
+              and re-authorize the xyz.io application. Check out our
+              %a.text-z-blue.hover:underline{href: "https://help.xyz.io/article/4-getting-started-installation", target: "_blank"} 
+                install guide 
+              if you would like more information.
+  - else
+    %h1.font-bold.text-2xl
+      Welcome
+    .text-lg.text-gray-400
+      Log in to your account
+  %a{href: user_zoom_omniauth_authorize_path, "data-method" => "post"}
+    %button.mt-4.px-5.py-4.mx-auto.block.leading-6.text-center.text-white.transition.bg-z-blue.rounded-md.shadow.ripple.sm:px-14.hover:shadow-lg.hover:bg-z-blue-light.focus:outline-none
+      Log in with Zoom

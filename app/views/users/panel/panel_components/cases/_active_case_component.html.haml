@@ -1,0 +1,65 @@
+- if court_case
+  .active-case{
+    id: "case-#{court_case.case_number}",
+    "data-cy" => "case-container"
+  }
+    %h1.text-lg.md:text-xl.font-bold.mt-2.mb-2 Active Case
+    .case-container.bg-z-blue.bg-opacity-10.p-5.mb-3.rounded-md.border.border-z-blue
+      .case-info.mt-1.pb-3.flex.border-b.border-z-blue
+        .case-name.flex-1
+          %h1.text-xl.font-medium
+            = "Case #{court_case.case_number}"
+
+          #participants-count{"data-cy" => "participants-count"}
+            = render partial: "users/panel/panel_components/cases/participants_count_component", locals: { |
+              in_meeting_room_count: court_case.participants_in_meeting_room.count, |
+              in_waiting_room_count: court_case.participants_in_waiting_room.count }
+
+        .meeting-time.flex-1{"data-controller" => "users--panel--meeting-timer", "data-users--panel--meeting-timer-started-at-value" => "#{court_case.started_at}", "data-reflex-permanent" => true}
+          %a#meeting-time.block.mt-1.text-sm.text-z-blue.font-light.text-right{"data-users--panel--meeting-timer-target" => "timer"}
+            = time_difference(court_case.started_at, Time.zone.now)
+          -if host_panel?
+            = render partial: "users/panel/panel_components/more_info_component", locals: { |
+              court_case: court_case, |
+              user: @user }
+
+      .participant-list.mt-4{id: "participants-list-#{court_case.case_number}", "data-cy" => "participants-list-container"}
+        - court_case.participants_in_meeting_room.each do |participant|
+          = render partial: "users/panel/panel_components/cases/participant", locals: { |
+            participant: participant, |
+            attendance: court_case.attendances.find_by(participant: participant), |
+            court_case: court_case }
+        - court_case.participants_in_waiting_room.each do |participant|
+          = render partial: "users/panel/panel_components/cases/participant", locals: { |
+            participant: participant, |
+            attendance: court_case.attendances.find_by(participant: participant), |
+            court_case: court_case }
+      -# %button.w-full.mt-4.px-14.py-3.mx-auto.block.leading-6.shadow-z.text-center.text-white.transition.bg-z-red.rounded-md.ripple.hover:shadow-lg.hover:bg-z-red-light.focus:outline-none.opacity-50{
+      -#   id: "starting-btn-#{court_case.case_number}",
+      -#   disabled: true,
+      -#   "data-cy" => "processing-btn"
+      -# }
+      -#   %svg.inline-block.animate-spin.h-3.w-3{:fill => "none", :viewbox => "0 0 24 24", :height => "10", :xmlns => "http://www.w3.org/2000/svg", "data-cy" => "loading-spinner"}
+      -#     %circle.opacity-25{:cx => "12", :cy => "12", :r => "10", :stroke => "currentColor", "stroke-width" => "4"}
+      -#     %path.opacity-75.text-gray-500{:d => "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z", :fill => "currentColor"}
+      -#   .ml-1.inline-block Processing
+      -if host_panel?
+        %button.w-full.mt-4.px-14.py-3.mx-auto.block.leading-6.shadow-z.text-center.text-white.transition.bg-z-red.rounded-md.ripple.hover:shadow-lg.hover:bg-z-red-light.focus:outline-none{
+          id: "end-btn-#{court_case.case_number}",
+          "data-action" => "click->users--panel--cases#endCase",
+          "data-case_number" => court_case.case_number,
+          "data-involves-zoom-sdk" => "true",
+          disabled: !@user.sdk_request_available?,
+          class: (@user.sdk_request_available? ? "" : "opacity-50 deactivated-link"),
+          "data-cy" => "end-case-btn"
+        }
+          End Case
+
+      %button.hidden.w-full.mt-4.px-14.py-3.mx-auto.block.leading-6.shadow-z.text-center.text-white.transition.bg-z-red.rounded-md.ripple.hover:shadow-lg.hover:bg-z-red-light.focus:outline-none{
+        id: "disabled-end-btn-#{court_case.case_number}",
+        disabled: true
+      }
+        %svg.inline-block{:fill => "none", :height => "16", :viewbox => "0 0 16 16", :width => "16", :xmlns => "http://www.w3.org/2000/svg"}
+          %path{:d => "M16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8Z", :fill => "white", :opacity => "0.4"}
+          %path{:d => "M5 7.74059L7.43045 10L9.21522 8L11 6", :stroke => "white"}
+        .ml-1.inline-block Ending the case

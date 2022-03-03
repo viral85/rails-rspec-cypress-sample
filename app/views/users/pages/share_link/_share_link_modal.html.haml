@@ -1,0 +1,57 @@
+.hidden.animate__animated.animate__fadeIn.fixed.inset-0.overflow-y-auto.flex.items-center.justify-center{"data-controller"=>"users--share-link", "data-modal-target"=>"container", style: "z-index: 9999;"}
+  .max-h-screen.w-full.max-w-lg.relative
+    / Modal Card
+    #share_modal.inline-block.align-bottom.bg-white.rounded-lg.px-4.pt-5.pb-4.text-left.overflow-hidden.shadow-xl.transform.transition-all.sm:my-8.sm:align-middle.sm:max-w-lg.sm:w-full.sm:p-6
+      .sm:flex.sm:items-start
+        .mx-auto.flex-shrink-0.flex.items-center.justify-center.h-12.w-12.rounded-full.bg-gray-200.sm:mx-0.sm:h-10.sm:w-10
+          / Heroicon name: outline/exclamation
+          %svg.h-6.w-6{:fill => "none", :stroke => "currentColor", :viewbox => "0 0 24 24", :xmlns => "http://www.w3.org/2000/svg"}
+            %path{:d => "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z", "stroke-linecap" => "round", "stroke-linejoin" => "round", "stroke-width" => "2"}
+        .mt-3.text-center.sm:mt-0.sm:ml-4.sm:text-left
+          %h3#modal-title.text-lg.leading-6.font-medium.text-gray-900.inline-block
+            Share Your Control Panel
+
+
+
+          %button.cursor-pointer.float-right{"data-controller" => "dropdown"}
+            %svg.h-6.w-6{:fill => "none", :stroke => "currentColor", :viewbox => "0 0 24 24", :xmlns => "http://www.w3.org/2000/svg", "data-action" => "click->dropdown#toggle click@window->dropdown#hide"}
+              %path{:d => "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z", "stroke-linecap" => "round", "stroke-linejoin" => "round", "stroke-width" => "2"}
+              %path{:d => "M15 12a3 3 0 11-6 0 3 3 0 016 0z", "stroke-linecap" => "round", "stroke-linejoin" => "round", "stroke-width" => "2"}
+
+            .origin-top-right.absolute.right-0.mt-1.w-40.rounded-md.shadow-lg.py-1.bg-white.ring-1.ring-black.ring-opacity-5.divide-y.divide-gray-100.focus:outline-none.hidden{"aria-labelledby" => "user-menu-button", "aria-orientation" => "vertical", :role => "menu", :tabindex => "-1", "data-dropdown-target" => "menu"}
+              .py-1
+                %a.block.px-4.py-2.text-sm.text-gray-700{"data-reflex" => "click->ShareLinkReflex#reset_share_token", :role => "menuitem", :tabindex => "-1"} Reset Share Token
+
+          .mt-2
+            %p.text-sm.text-gray-500.mb-2
+              Share your link with other team members and allow them to view your control panel.
+
+            -# %p.text-sm.text-gray-500.mb-3
+            -#   Learn More
+
+            =select_tag "share_link", options_for_select([["On", true], ["Off", false]], user.panel.sharing_enabled), data: { "users--share-link-target" => "shareLinkInput", "data-action"=>"change->users--share-link#toggleShareLinkOption" }, class: "w-full h-10 pl-3 text-gray-700 appearance-none rounded border border-gray-200 focus:border-2 focus:border-z-blue", "data-action"=>"change->users--share-link#toggleShareLinkOption"
+
+            %p.text-sm.text-gray-500.mt-1
+              Anyone with the link will be able to view your control panel
+
+            - if user.panel.sharing_enabled?
+
+              %hr.border.border-grey-light.mt-7.mb-5
+
+              .flex.flex-wrap.items-stretch.relative{"data-controller" => "copy-text", "data-copy-text-user-url-value" => "#{user&.share_url}"}
+                .bg-z-gray-lightest.overflow-hidden.flex-shrink.flex-grow.flex-auto.leading-9.w-px.flex-1.border.rounded.h-10.border-grey-light.px-3.relative.text-z-gray.text-sm.font-light{:type => "text", "data-copy-text-target" => "url", disabled: true, "data-cy" => "registration-room-url"}
+                  =user&.share_url
+                .flex
+                  .sm:flex.sm:flex-row-reverse
+                    %a.cursor-pointer.inline-flex.justify-center.rounded-md.border.border-z-blue.shadow-sm.px-2.py-2.w-28.text-base.font-medium.text-z-blue.focus:outline-none.sm:ml-1.sm:text-sm{
+                      :type => "button",
+                      "data-action"=>"click->copy-text#copyUrl"
+                    }
+                      Copy Link
+
+      .mt-5.sm:mt-12.sm:flex.sm:flex-row-reverse
+        %a.cursor-pointer.inline-flex.justify-center.rounded-md.border.border-transparent.shadow-sm.px-2.py-2.w-28.bg-z-blue.text-base.font-medium.text-white.hover:bg-z-blue-dark.focus:outline-none.focus:ring-2.focus:ring-offset-2.focus:ring-red-500.sm:ml-3.sm:text-sm{
+          :type => "button",
+          "data-action"=>"click->modal#close"
+        }
+          Done

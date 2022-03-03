@@ -1,0 +1,86 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{ name: "env", content: Rails.configuration.current_environment }/
+    %meta{ name: "honeybadger-js-api-key", content: ENV["HONEYBADGER_JS_API_KEY"] }/
+    %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}/
+
+    %title xyz.io
+    = csrf_meta_tags
+    = csp_meta_tag
+    = action_cable_meta_tag
+    = stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+
+    -if load_analytics?
+      - if load_segment?(@participant_page)
+        -# Load Segment
+        :javascript
+          !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware"];analytics.factory=function(e){return function(){var t=Array.prototype.slice.call(arguments);t.unshift(e);analytics.push(t);return analytics}};for(var e=0;e<analytics.methods.length;e++){var key=analytics.methods[e];analytics[key]=analytics.factory(key)}analytics.load=function(key,e){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n);analytics._loadOptions=e};analytics._writeKey="8n3aAG0odHK8H9MsSnaGDKvLAPYTK4SB";analytics.SNIPPET_VERSION="4.13.2";
+          analytics.load("8n3aAG0odHK8H9MsSnaGDKvLAPYTK4SB");
+          analytics.page();
+          }}();
+      - else
+        -# Load Google Analytics
+        %script{async: "", src: "https://www.googletagmanager.com/gtag/js?id=UA-200169280-1"}
+        :javascript
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'UA-200169280-1');
+
+
+  %body{class: (action_name == "panel" || action_name == "view_only_panel" ? "control-panel" : "")}
+    -# Notifications
+    -if notice.present? || alert.present?
+      .fixed.z-50.inset-0.flex.items-end.justify-center.px-4.py-6.pointer-events-none.sm:p-6.sm:items-start.sm:justify-end{ class: ("sm:p-20" if user_signed_in?), "data-cy" => "notification", "data-controller" => "alert" }
+        #alert-div.max-w-sm.w-full.bg-white.shadow-lg.rounded-lg.pointer-events-auto.animate__animate.animate__fadeIn
+          .rounded-lg.shadow-xs.overflow-hidden
+            .p-4
+              .flex.items-start
+                .flex-shrink-0
+                  -if notice.present?
+                    %svg.h-5.w-5.text-z-green{:fill => "currentColor", :viewbox => "0 0 20 20"}
+                      %path{"clip-rule" => "evenodd", :d => "M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z", "fill-rule" => "evenodd"}
+                  - elsif alert.present? || @invalid_account_error.present?
+                    %svg.h-5.w-5.text-z-red{:fill => "currentColor", :viewbox => "0 0 20 20"}
+                      %path{"clip-rule" => "evenodd", :d => "M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z", "fill-rule" => "evenodd"}
+                .ml-3.w-0.flex-1{:class => "pt-0.5"}
+                  %p.text-sm.leading-5.font-medium.text-gray-900
+                    = @invalid_account_error || alert
+                    = notice
+                .ml-4.flex-shrink-0.flex
+                  %button.inline-flex.text-gray-400.focus:outline-none.focus:text-gray-500.transition.ease-in-out.duration-150{"data-action" => "click->alert#alertFadeOut", "data-cy" => "close-app-notification"}
+                    %svg.h-5.w-5{:fill => "currentColor", :viewbox => "0 0 20 20"}
+                      %path{"clip-rule" => "evenodd", :d => "M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z", "fill-rule" => "evenodd"}
+    .min-h-screen.bg-z-gray-lightest.pb-10
+      -# Nav Bar
+      - if user_signed_in? && @participant_page != true
+        = render "layouts/logged_in_navbar" if @show_user_nav
+      - elsif !page_is_view_only_panel?
+        = render "layouts/navbar"
+
+
+      -# Body
+      - if page_is_host_panel? || page_is_view_only_panel?
+        = yield
+      - else
+        = render "layouts/z_background"
+        .container.relative
+          = yield
+
+    -if load_segment?(@participant_page)
+      :javascript
+        analytics.identify(#{current_analytics_user&.analytics_user&.id}, {
+          name: "#{current_analytics_user&.to_s}",
+          email: "#{current_analytics_user&.email}"
+        }, {
+          integrations: {
+            Intercom : {
+              user_hash : "#{OpenSSL::HMAC.hexdigest("sha256", "3NjzirOc9Y8gu5pM4B8HBg95VbU5W9lZ-nPHhVkb", current_analytics_user&.analytics_user&.id&.to_s)}",
+              hideDefaultLauncher: #{page_is_host_panel?}
+            }
+          }
+        }
+        );

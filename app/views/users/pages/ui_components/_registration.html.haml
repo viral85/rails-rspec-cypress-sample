@@ -1,0 +1,55 @@
+.max-w-xl.mx-auto.mt-10
+  .py-3.mb-2
+    %h1.text-2xl.text-center.font-bold.mt-12.mb-1 Court Room Registration
+    %p.text-center.text-z-gray.font-light.mt-1.text-lg To be part of the virtual hearing please register with your information and the case number
+
+.max-w-md.mx-auto
+  .p-1
+    %h1.text-xl.font-semibold
+    %form
+      %label.block.text-sm.text-z-gray.font-light{:for => "first_name"} First Name
+      %input.block.w-full.p-3.mt-1.text-gray-700.appearance-none.rounded.border.border-gray-200.focus:border-2.focus:border-z-blue{:autocomplete => "first_name", :name => "firstname", :placeholder => "Devin", :required => "", :type => "text"}/
+
+      %label.block.mt-3.text-sm.text-z-gray.font-light{:for => "last_name"} Last Name
+      %input.block.w-full.p-3.mt-1.text-gray-700.appearance-none.rounded.border.border-gray-200.focus:border-2.focus:border-z-blue{:autocomplete => "last_name", :name => "email", :placeholder => "Schinnerr", :required => "", :type => "text"}/
+
+      %label.block.mt-3.text-sm.text-z-gray.font-light{:for => "role"} Role
+      %select.block.w-full.p-3.mt-1.text-gray-700.appearance-none.rounded.border.border-gray-200.focus:border-2.focus:border-z-blue
+        %option Defense Attorney
+        %option Witness
+        %option Family Member
+      %svg.relative.mr-5.float-right{:style => "top:-35px;", :fill => "none", :height => "20", :viewbox => "0 0 11 20", :width => "11", :xmlns => "http://www.w3.org/2000/svg"}
+        %path{:d => "M5.5 0L5.03542 0.418063L0 4.87741L0.929155 6L5.5 1.95096L10.0708 6L11 4.87741L5.96458 0.418063L5.5 0Z", :fill => "#39394B"}
+        %path{:d => "M5.5 20L5.96458 19.5819L11 15.1226L10.0708 14L5.5 18.049L0.929156 14L4.26396e-07 15.1226L5.03542 19.5819L5.5 20Z", :fill => "#39394B"}
+
+      %label.block.mt-3.text-sm.text-z-gray.font-light{:for => "case_number"} Case Number
+      %input.block.w-full.p-3.mt-1.mb-2.text-gray-700.appearance-none.rounded.border.border-gray-200.focus:border-2.focus:border-z-blue{:autocomplete => "case-number", :name => "password-confirm", :placeholder => "37CB4C", :required => "", :type => "text"}/
+
+      %input.block.w-full.p-3.mt-1.mb-2.text-gray-700.appearance-none.rounded.border.border-z-blue.focus:border-2.focus:border-z-blue{:autocomplete => "case-number", :name => "password-confirm", :placeholder => "37CB4C", :value => "5LK1P", :required => "", :type => "text"}/
+      %svg.relative.mr-4.float-right{:style => "top:-43px; margin-bottom: -20px;", :fill => "none", :height => "20", :viewbox => "0 0 24 20", :width => "24", :xmlns => "http://www.w3.org/2000/svg"}
+        %path{:d => "M20 10C20 15.5228 15.5228 20 10 20C4.47715 20 0 15.5228 0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10Z", :fill => "#1477FB", :opacity => "0.2"}
+        %path{:d => "M6.25 9.67573L9.28806 12.5L11.519 10L13.75 7.5", :stroke => "#1477FB"}
+
+      %input.block.w-full.p-3.mt-1.mb-2.text-gray-700.appearance-none.rounded.border.border-z-red.focus:border-2.focus:border-z-blue{:autocomplete => "case-number", :name => "password-confirm", :placeholder => "37CB4C", :value => "FA6947", :required => "", :type => "text"}/
+      .remove-button.hidden.relative.-mr-32.md:block{:style => "top:-43px;"}
+        %p.block.ml-2.float-right.text-sm.text-z-red.font-light.inline-block Remove Case
+        %svg.block.float-right.inline-block{:fill => "none", :height => "20", :viewbox => "0 0 20 20", :width => "20", :xmlns => "http://www.w3.org/2000/svg"}
+          %path{:d => "M20 10C20 15.5228 15.5228 20 10 20C4.47715 20 0 15.5228 0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10Z", :fill => "#FA6949", :opacity => "0.2"}
+          %rect{:height => "6.5", :stroke => "#FA6949", "stroke-width" => "0.5", :transform => "rotate(45 12.1213 7.47416)", :width => "0.5", :x => "12.1213", :y => "7.47416"}
+          %rect{:height => "6.5", :stroke => "#FA6949", "stroke-width" => "0.5", :transform => "rotate(135 12.4753 12.0713)", :width => "0.5", :x => "12.4753", :y => "12.0713"}
+      %p.block.mt-1.mb-2.text-sm.text-z-red.font-light The case number is not valid
+
+      %input.block.w-full.p-3.mt-1.mb-2.text-gray-700.appearance-none.rounded.border.border-z-blue.focus:border-2.focus:border-z-blue{:autocomplete => "case-number", :name => "password-confirm", :placeholder => "37CB4C", :value => "8GOSC", :required => "", :type => "text"}/
+      %svg.relative.mr-4.float-right{:style => "top:-43px; margin-bottom: -20px;", :fill => "none", :height => "20", :viewbox => "0 0 24 20", :width => "24", :xmlns => "http://www.w3.org/2000/svg"}
+        %path{:d => "M20 10C20 15.5228 15.5228 20 10 20C4.47715 20 0 15.5228 0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10Z", :fill => "#1477FB", :opacity => "0.2"}
+        %path{:d => "M6.25 9.67573L9.28806 12.5L11.519 10L13.75 7.5", :stroke => "#1477FB"}
+
+
+      %a.block.mt-4.text-sm.text-z-blue.font-light.underline Add another case number
+
+
+
+
+
+      %button.w-full.mt-5.px-14.py-4.mx-auto.block.leading-6.text-center.text-white.transition.bg-z-blue.rounded-md.shadow.ripple.hover:shadow-lg.hover:bg-z-blue-light.focus:outline-none
+        Register

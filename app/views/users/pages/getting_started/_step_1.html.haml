@@ -1,0 +1,64 @@
+%div.p-4.rounded-md.bg-z-blue-lightest{
+  "data-users--onboarding-target" => "step1Container",
+  class: "#{'border border-z-blue' if !@step1_completed}",
+  "data-step_completed" => @step1_completed.to_s
+}
+  .grid.grid-cols-3.gap-4.cursor-pointer{
+    "data-action" => "click->users--onboarding#handleStepClick",
+    "data-step_number" => "1"
+  }
+    .col-start-1.col-span-4.md:col-span-2.flex
+      %span.text-z-gray-lightbluish.bg-z-gray-creamybluish.rounded-full.h-7.w-7.flex.items-center.justify-center
+        %svg.h-5.w-5{
+          "data-users--onboarding-target" => "step1Checkmark",
+          :fill => "none", :stroke => "currentColor", :viewbox => "0 0 24 24", :xmlns => "http://www.w3.org/2000/svg",
+          class: "#{'hidden' unless @step1_completed}"
+        }
+          %path{:d => "M5 13l4 4L19 7", "stroke-linecap" => "round", "stroke-linejoin" => "round", "stroke-width" => "2"}
+        %span{
+          "data-users--onboarding-target" => "step1Number",
+          class: "#{'hidden' if @step1_completed}"
+        }
+          1
+      %span.ml-5.mt-1{
+        "data-users--onboarding-target" => "step1Header",
+        class: "#{@step1_completed ? 'text-gray-500 font-normal' : 'font-medium'}"
+      }
+        See what you can do with xyz.io
+    .col-end-5.flex.invisible.md:visible
+      %span.text-gray-500
+        about 2 minutes
+      %span.ml-2.text-gray-500.transform{
+        class: "#{'rotate-90' if !@step1_completed}",
+        "data-users--onboarding-target" => "step1Toggler"
+      }
+        %svg.h-6.w-6{:fill => "none", :stroke => "currentColor", :viewbox => "0 0 24 24", :xmlns => "http://www.w3.org/2000/svg"}
+          %path{:d => "M9 5l7 7-7 7", "stroke-linecap" => "round", "stroke-linejoin" => "round", "stroke-width" => "2"}
+
+  .container.ml-4.bg-z-blue-lightest.transition-all.transform.duration-700.overflow-hidden{
+    "data-users--onboarding-target" => "step1Body",
+    class: "#{@step1_completed ? 'max-h-0' : 'max-h-192'}"
+  }
+    .grid.grid-cols-2.gap-4.pt-10
+      %div
+        %p.mb-5 Welcome to xyz.io, your new Zoom waiting room management platform.
+        %p.mb-5 First, watch a quick video to get an overview of the steps you’ll take to set up xyz.io for your court.
+        %p
+          If you currently create multiple Zoom meetings for multiple court days or dockets we suggest you read our
+          =link_to "Meeting Invites article.", "https://help.xyz.io/en/articles/5698667-meeting-invites", class: "text-z-blue", target: "_blank"
+
+        %button.mt-4.mb-8.px-6.py-3.mt-14.leading-6.text-center.text-white.transition.bg-z-blue.rounded-md.shadow.ripple.hover:shadow-lg.hover:bg-z-blue-light.focus:outline-none{
+          "data-action" => "click->users--onboarding#completeStep",
+          "data-step_number" => "1",
+          "data-cy" => "complete-step-1",
+          "data-users--onboarding-target" => "step1CompleteBtn",
+          class: "#{'hidden' if @step1_completed}"
+        }
+          Complete this step
+      %div.relative
+        .max-w-md.w-full.float-right
+          %script{:async => "", :src => "https://fast.wistia.com/embed/medias/q3n8mtiymt.jsonp"}
+          %script{:async => "", :src => "https://fast.wistia.com/assets/external/E-v1.js"}
+          .wistia_responsive_padding{:style => "padding:62.5% 0 0 0;position:relative;"}
+            .wistia_responsive_wrapper{:style => "height:100%;left:0;position:absolute;top:0;width:100%;"}
+              %span.wistia_embed.wistia_async_q3n8mtiymt{:class => "popover=true popoverAnimateThumbnail=true videoFoam=true", :style => "display:inline-block;height:100%;position:relative;width:100%"}  

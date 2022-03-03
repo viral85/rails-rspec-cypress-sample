@@ -1,0 +1,72 @@
+%h2.text-lg.text-center.text-gray-500{"data-cy" => "zoom_meeting_id"}
+  %span.font-bold Meeting ID:
+  =@user&.zoom_meeting&.meeting_id
+#meeting_topic_title.flex{
+  "data-users--settings-target" => "topicTitle",
+  "data-action" =>"mouseover->users--settings#showEditBtn mouseout->users--settings#hideEditBtn"
+}
+  %div.flex-1
+  %h2.text-lg.text-center.text-gray-500{style: "max-width:275px;"}
+    %span.font-bold Topic:
+    =@user&.zoom_meeting&.topic
+  .flex-1
+    %btn.hidden.cursor-pointer.px-5.py-1.ml-1.inline-block.text-xs.text-gray-400.border.border-grey-light.rounded-md.hover:bg-z-gray-lightest{
+      "data-users--settings-target" => "topicEditBtn",
+      "data-action" => "click->users--settings#topicEditMode"
+    }
+      %svg.opacity-50.inline-block{:height => "15", :viewbox => "0 0 28 28", :width => "15", :xmlns => "http://www.w3.org/2000/svg"}
+        %path{:d => "M18.308 0l-16.87 16.873-1.436 7.127 7.125-1.437 16.872-16.875-5.691-5.688zm-15.751 21.444l.723-3.585 12.239-12.241 2.861 2.862-12.239 12.241-3.584.723zm17.237-14.378l-2.861-2.862 1.377-1.377 2.861 2.861-1.377 1.378z"}
+      Edit
+
+#meeting_topic_form.hidden{"data-users--settings-target" => "topicForm"}
+  %div{class: "h-10 mt-2 w-3/4 mx-auto h-auto"}
+    %input.w-full.case-number-input.block.p-3.text-gray-700.h-10.rounded.border.border-gray-200.focus:border-2.focus:border-z-blue{
+      :type => "text",
+      "value" => @zoom_meeting&.topic,
+      "data-action" => "input->users--settings#validateTopicTitle",
+      "data-users--settings-target" => "topicInput",
+      "data-participant-token" => @user.token
+    }
+
+    .topic-buttons.mt-2.mb-8.text-right
+      %a.cursor-pointer.px-5.py-1.inline-block.text-xs.text-white.rounded-md.inline-block.bg-z-green-dark.w-20.text-center.mx-2.hover:bg-z-green{
+        "data-users--settings-target" => "topicSave",
+        "data-action" => "click->users--settings#saveTopic",
+        "data-user" => @user,
+        :id => "saveTopicBtn"
+      }
+        Save
+
+      %btn.cursor-pointer.px-5.py-1.inline-block.text-xs.text-gray-400.border.border-grey-light.rounded-md.inline-block.text-center.hover:bg-z-gray-lightest{
+        "data-users--settings-target" => "topicCancel",
+        "data-action" => "click->users--settings#cancelTopicEditMode"
+      }
+        Cancel
+
+    %p.hidden.invalid-title-notice.block.-mt-4.mb-2.text-sm.text-z-red.font-light.text-center.font-bold
+      = "Invalid Topic/Title"
+
+- if @request_error
+  %p.invalid-notice.block.mt-1.mb-2.text-sm.text-z-red.font-light.text-center.font-bold
+    = @request_error
+
+.mt-6.mb-8.px-8
+  = render partial: "users/shared/registration_page_input",  locals: { user: @user }
+
+%mb-6.flex.flex-col.text-center
+  %button.px-5.py-4.mb-2.mx-auto.leading-6.text-center.text-white.transition.bg-z-blue.rounded-md.shadow.ripple.sm:px-14.hover:shadow-lg.hover:bg-z-blue-light.focus:outline-none{:href => "#", :onclick => "javascript:window.open('/panel', 'Panel', 'menubar=1, resizable=1, width=400, height=1000');"}
+    Launch Control Panel
+
+  -if @zoom_meeting&.start_zoom_button_available?
+    %a{href: @zoom_meeting&.start_url, target: "_blank", class: "px-3 py-2 mx-auto mb-2 leading-6 text-center text-z-blue transition border border-z-blue rounded-md shadow ripple sm:px-14 hover:shadow-lg focus:outline-none"}
+      Start Zoom Meeting
+
+
+%div{"data-controller" => "modal", "data-modal-allow-background-close" => "true"}
+
+  %button.px-4.py-1.mx-auto.block.leading-6.text-center.text-z-blue.border-z-blue.border.transition.rounded-md.shadow.ripple.hover:shadow-lg.focus:outline-none{"data-action" => "click->modal#open", :href => "#"}
+    %svg.w-5.h-5.inline-block{:fill => "none", :stroke => "currentColor", :viewbox => "0 0 24 24", :xmlns => "http://www.w3.org/2000/svg"}
+      %path{:d => "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z", "stroke-linecap" => "round", "stroke-linejoin" => "round", "stroke-width" => "2"}
+    %span Share
+
+  = render partial: "users/pages/share_link/share_link_modal", locals: { user: @user }

@@ -1,0 +1,11 @@
+%div{class: "max-w-4xl mx-auto mt-4 md:mt-18", "data-controller" => "participants--meeting-link"}
+  .bg-white.shadow-z.rounded-lg.py-3.mb-10.px-3
+    %h1.text-lg.md:text-2xl.text-center.font-bold.mt-3.my-10
+      =t("meeting_link.title")
+    .max-w-3xl.grid.gap-12.mx-auto.mt-2.mb-8
+      %p.text-left.text-z-gray.font-light.mt-2r.text-md.md:text-xl
+        =t("meeting_link.welcome_html", participant: @current_participant)
+
+    .max-w-xl.grid.mx-auto.mt-2.mb-8
+      %a{href: "#{@current_participant.zoom_join_url}", class: " button cursor-pointer mt-5 px-14 py-4 mx-auto block leading-6 text-center text-white transition bg-z-blue rounded-md shadow ripple hover:shadow-lg hover:bg-z-blue-light focus:outline-none"}
+        =t("meeting_link.launch_btn")

@@ -1,0 +1,12 @@
+.flex.flex-wrap.items-stretch.relative{"data-controller" => "copy-text", "data-copy-text-user-url-value" => "#{user&.registration_room_url}"}
+  .bg-z-gray-lightest.overflow-hidden.flex-shrink.flex-grow.flex-auto.leading-9.w-px.flex-1.border.h-10.border-grey-light.px-3.relative.text-z-gray.text-sm.font-light{:type => "text", "data-copy-text-target" => "url", disabled: true, "data-cy" => "registration-room-url"}
+    =user&.registration_room_url
+  .flex.-mr-px
+    %a{href: user.registration_room_url, class: "bg-z-gray-lightest flex items-center leading-normal border border-l-0 border-grey-light px-3 whitespace-no-wrap text-sm text-z-gray cursor-pointer", target: "_blank", title: "View your registration page", "data-cy" => "view-registration"}
+      %svg.h-5.w-5.text-zgray{fill: "none", stroke: "currentColor", viewbox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg"}
+        %path{d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z", "stroke-linecap" => "round", "stroke-linejoin" => "round", "stroke-width" => "2"}
+        %path{d: "M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z", "stroke-linecap" => "round", "stroke-linejoin" => "round", "stroke-width" => "2"}
+  
+    %span.bg-z-gray-lightest.flex.items-center.leading-normal.rounded.rounded-l-none.border.border-l-0.border-grey-light.px-3.whitespace-no-wrap.text-sm.text-z-gray.cursor-pointer{"data-action"=>"click->copy-text#copyUrl", title: "Copy registration link", "data-cy" => "copy-registration-link"}
+      %svg.h-5.w5.text-zgray{fill: "none", stroke: "currentColor", viewbox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg"}
+        %path{d: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2", "stroke-linecap" => "round", "stroke-linejoin" => "round", "stroke-width" => "2"}

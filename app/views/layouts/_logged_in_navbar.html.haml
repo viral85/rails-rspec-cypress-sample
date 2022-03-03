@@ -1,0 +1,36 @@
+%nav.bg-white.border-b.border-gray-200
+  .max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8
+    .flex.justify-between.h-16
+      .flex
+        .flex-shrink-0.flex.items-center
+          =link_to root_path do
+            %img.block.lg:hidden.h-8.w-auto{:alt => "xyz.io logo", :src => "/logo.svg"}/
+            %img.hidden.lg:block.h-8.w-auto{:alt => "xyz.io logo", :src => "/logo.svg"}/
+        .hidden.sm:ml-12.sm:flex.sm:space-x-8
+          =link_to "Home", root_path, class: "#{current_page?(:controller => "pages", :action => "home") ? "border-z-blue border-b-2" : ""} text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium"
+        - if !current_user&.onboarding&.completed?
+          .hidden.sm:ml-12.sm:flex.sm:space-x-8
+            =link_to "/getting-started", class: "#{current_page?(:controller => "pages", :action => "getting_started") ? "border-z-blue border-b-2" : ""} text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium", "data-cy" => "onboarding-menu-item" do
+              Getting Started
+              %span.rounded-full.h-5.w-5.ml-1.-mt-4.text-xs.flex.items-center.text-white.justify-center.bg-red-500{"data-cy" => "onboarding-counter", class: "pr-0.5"}
+                = current_user&.onboarding&.count_steps_left
+      .absolute.inset-y-0.right-0.flex.items-center.pr-2.sm:static.sm:inset-auto.sm:ml-6.sm:pr-0
+        .ml-3.relative.z-40{"data-controller" => "dropdown", "data-cy" => "home-menu"}
+          - if current_user.pic_url.present?
+            %button#user-menu-button.bg-white.rounded-full.flex.text-sm.focus:outline-none.focus:ring-2.focus:ring-offset-2.focus:ring-z-blue{"aria-expanded" => "false", "aria-haspopup" => "true", :type => "button", "data-action" => "click->dropdown#toggle click@window->dropdown#hide"}
+              %img.h-8.w-8.rounded-full{:alt => "", src: current_user.pic_url}/
+          - else
+            %span.inline-flex.items-center.justify-center.h-9.w-9.rounded-full.bg-z-blue.cursor-pointer{"data-action" => "click->dropdown#toggle click@window->dropdown#hide", :role => "button"}
+              %span.text-sm.font-medium.leading-none.text-l-primary.text-white
+                = current_user.initials
+          .origin-top-right.absolute.right-0.mt-2.w-56.rounded-md.shadow-lg.py-1.bg-white.ring-1.ring-black.ring-opacity-5.divide-y.divide-gray-100.focus:outline-none.hidden{"aria-labelledby" => "user-menu-button", "aria-orientation" => "vertical", :role => "menu", :tabindex => "-1", "data-dropdown-target" => "menu"}
+            .py-1
+              .block.px-4.py-2.text-sm.text-gray-700
+                Signed in as
+                = current_user.email
+            .py-1
+              - if current_user&.onboarding&.completed?
+                %a.block.px-4.py-2.text-sm.text-gray-700{:href => "/getting-started", :role => "menuitem", :tabindex => "-1"} Getting Started
+              %a.block.px-4.py-2.text-sm.text-gray-700{:href => "/settings", :role => "menuitem", :tabindex => "-1"} Settings
+              .block.px-4.py-2.text-sm.text-gray-700
+                =link_to "Sign Out", destroy_user_session_path, class: "text-z-red", data: { cy: "sign-out" }

@@ -1,0 +1,10 @@
+- if in_meeting_room_count&.positive?
+  %svg.inline-block{:fill => "none", :height => "6", :viewbox => "0 0 6 6", :width => "6", :xmlns => "http://www.w3.org/2000/svg"}
+    %circle{:cx => "3", :cy => "3", :fill => "#37CB4C", :r => "3"}
+  %span.text-xs.font-light.text-z-gray.inline-block.mr-2{"data-cy"=>"in-meeting-room-counter"}
+    = in_meeting_room_count
+- if in_waiting_room_count&.positive?
+  %svg.inline-block{:fill => "none", :height => "6", :viewbox => "0 0 6 6", :width => "6", :xmlns => "http://www.w3.org/2000/svg"}
+    %circle{:cx => "3", :cy => "3", :fill => "#1477FB", :r => "3"}
+  %span.text-xs.font-light.text-z-gray.inline-block.mr-2{"data-cy"=>"in-waiting-room-counter"}
+    = in_waiting_room_count

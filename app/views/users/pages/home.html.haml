@@ -1,0 +1,15 @@
+.max-w-md.mx-auto.mt-5{"data-controller"=>"users--settings"}
+  .bg-white.shadow-z.rounded-lg.py-5
+    %h1.text-xl.text-center.font-bold.mt-8
+      =@user
+    - if @user.zoom_basic_plan?
+      = render partial: "license_message"
+    - elsif @zoom_meeting.blank? || !@zoom_meeting.exist_in_zoom?
+      = render partial: "zoom_meeting_not_found"
+    - elsif !@zoom_meeting.recurring_with_fixed_time? || !@zoom_meeting.registration_enabled?
+      = render partial: "incompatible_type_message"
+    - elsif @zoom_meeting.ended?
+      = render partial: "zoom_meeting_not_found"
+    - else
+      = render partial: "meeting_details"
+

@@ -1,0 +1,84 @@
+.role{
+  "data-controller" => "users--role",
+  "data-new-role" => new_role.to_s,
+  "data-role-id" => role.id,
+  "data-text" => role.text,
+  "data-spanish-text" => role.spanish_text,
+  id: "role--#{role.id}"
+}
+  .role-info.mb-4{"data-users--role-target" => "roleInfo", class: "#{new_role ? 'hidden' : ''}"}
+    .handle.w-5.inline-block.float-left
+      .reorder-symbol.w-3.mt-3{style: "cursor: grab;"}
+        %svg{:fill => "none", :height => "22", :viewbox => "0 0 11 20", :width => "12", :xmlns => "http://www.w3.org/2000/svg"}
+          %rect{:fill => "white", :height => "6", :transform => "translate(11 20) rotate(-180)", :width => "11"}
+          %path{:d => "M5.5 0L5.03542 0.418063L0 4.87741L0.929155 6L5.5 1.95096L10.0708 6L11 4.87741L5.96458 0.418063L5.5 0Z", :fill => "#9292A6"}
+          %path{:d => "M5.5 20L5.96458 19.5819L11 15.1226L10.0708 14L5.5 18.049L0.929156 14L4.26396e-07 15.1226L5.03542 19.5819L5.5 20Z", :fill => "#9292A6"}
+
+    .handle.inline-block{style: "width: calc(100% - 20px); cursor: grab;"}
+      .grid.bg-z-gray-lightest.grid-cols-4.gap-1.rounded-md
+
+        %p.my-3.ml-2.english-role.font-medium.col-span-2
+          = role.text
+
+
+        %p.my-3.ml-2.spanish-role.font-medium
+          = role.spanish_text
+
+        .buttons.mt-3
+
+          %btn.mx-auto.cursor-pointer.px-5.py-1.text-xs.text-gray-400.border-t.border-b.border-r.border-gray-300.rounded-r-md.float-right.mr-4.hover:bg-z-gray-lightest{
+            "data-users--role-target" => "roleDeleteBtn",
+            "data-action" => "click->users--role#deleteRole",
+            "data-cy" => "roleDeleteBtn"
+          }
+            Delete
+
+          %btn.mx-auto.cursor-pointer.px-5.py-1.ml-1.text-xs.text-gray-400.border.border-gray-300.rounded-l-md.float-right.hover:bg-z-gray-lightest{
+            "data-users--role-target" => "roleEditBtn",
+            "data-action" => "click->users--role#roleEditMode",
+            "data-cy" => "roleEditForm"
+          }
+            Edit
+
+  .pl-5.role-edit-mode.grid.grid-cols-12.gap-1{"data-users--role-target" => "roleForm", class: "#{new_role ? 'hidden animate__animated animate__fadeIn' : 'hidden'}", style: "animation-duration: 1s"}
+
+    .english-role-div.grid.grid-cols-12.col-span-6
+
+      %input.w-full.block.p-3.text-gray-700.h-10.rounded.border.border-gray-200.col-span-10.focus:border-2.focus:border-z-blue{
+        :type => "text",
+        "value" => role.text,
+        "data-action" => "input->users--role#validateRole",
+        "data-users--role-target" => "text",
+        "data-roleID" => role.id,
+        "data-cy" => "englishRoleText"
+      }
+
+      %p.invalid-notice.block.text-sm.text-z-red.font-light.font-bold.col-span-10{"data-users--role-target" => "invalidNotice", "id" => "role-error-#{role.id}", "data-cy" => "role-text-english-error-msg"}
+
+    .spanish-role-div.grid.grid-cols-12.col-span-6
+
+      %input.w-full.block.p-3.text-gray-700.h-10.rounded.border.border-gray-200.col-span-10.focus:border-2.focus:border-z-blue{
+        :type => "text",
+        "value" => role.spanish_text,
+        "data-users--role-target" => "spanishText",
+        "data-cy" => "spanishRoleText"
+      }
+
+
+    .role-buttons.mt-2.mb-8.text-right.col-span-11
+      %btn.cursor-pointer.px-5.py-1.inline-block.text-xs.text-white.rounded-md.inline-block.bg-z-green-dark.w-20.text-center.mx-2.hover:bg-z-green{
+        "data-users--role-target" => "roleSave",
+        "data-action" => "#{new_role ? 'click->users--role#createRole' : 'click->users--role#saveRole'}",
+        "data-role-id" => role.id,
+        "data-cy" => "roleSave"
+      }
+        Save
+
+      %btn.cursor-pointer.px-5.py-1.inline-block.text-xs.text-gray-400.border.border-grey-light.rounded-md.inline-block.w-20.text-center.hover:bg-z-gray-lightest{
+        "data-users--role-target" => "roleCancel",
+        "data-action" => "click->users--role#cancelRoleEditMode"
+      }
+        Cancel
+  - if new_role
+    %div
+      = link_to "+ New Role", "", data: { action: "click->users--role#newRole", "users--role-target" => "addRoleBtn", "cy" => "addRoleBtn"}, class: "block mt-2 text-z-blue font-light border border-z-blue rounded-md float-right px-5 py-1"

@@ -1,0 +1,13 @@
+- display_logo = @participant_page # display logo if it's a participant page
+  
+%nav
+  %div{class: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-1"}
+    %div{class: "flex h-24 sm:h-28 py-2 #{display_logo ? 'justify-between' : 'justify-center md:justify-end'}"}
+      -if display_logo
+        .flex.items-center
+          = cl_image_tag @user&.logo, height: "120", width: "120", crop: "lfill", class: "h-full"
+      %div{class: "flex flex-col justify-center text-center"}
+        = link_to( image_tag("/logo.svg", alt: "xyz.io logo", class: "h-8 sm:h-10 w-auto"), "https://www.xyz.io", target: "_blank" )
+
+        -if @show_translation_link
+          =link_to t("change_locale.text"), {l: t("change_locale.param")}, class: "text-z-blue mt-2 block"

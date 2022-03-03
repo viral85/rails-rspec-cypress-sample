@@ -1,0 +1,7 @@
+%h1.text-lg.md:text-xl.font-bold.mb-2 Ungrouped participants
+#ungrouped-participants{"data-controller" => "users--panel--participants"}
+  - @user.ungrouped_participants.online.order("entered_waiting_room_at ASC").each do |participant|
+    - if participant.active?
+      = render partial: "users/panel/panel_components/ungrouped_participants/active_participant", locals: { participant: participant }
+    - elsif participant.waiting_room?
+      = render partial: "users/panel/panel_components/ungrouped_participants/participant", locals: { participant: participant }

@@ -1,0 +1,17 @@
+#control-panel.min-h-screen.bg-white{
+  "data-reflex-root" => "#controlPanelContent",
+  "data-controller" => "users--panel--state users--panel--host-panel",
+  "data-users--panel--state-zoom-meeting-title-value" => @zoom_meeting_title,
+  "data-users--panel--host-panel-zoom-data-value" => @zoom_data.to_h.to_json,
+  "data-users--panel--host-panel-zoom-meeting-status-value" => @zoom_meeting_status,
+  "data-cy" => "control-panel",
+}
+  = render partial: "panel"
+
+#active_invited_users_container.sticky.bottom-0.py-1.bg-z-gray-lightest.text-z-blue{ class: "#{@user.panel.active_invited_users_count.zero? ? 'hidden' : ''}" }
+  %svg.h-4.w-4.ml-5.inline-block{fill: "currentColor", viewbox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg"}
+    %path{d: "M10 12a2 2 0 100-4 2 2 0 000 4z"}
+    %path{"clip-rule" => "evenodd", d: "M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z", "fill-rule" => "evenodd"}
+  %p#active_invited_users_counter.text-xs.inline-block
+    = @user.panel.active_invited_users_string
+

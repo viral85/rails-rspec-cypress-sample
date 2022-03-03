@@ -1,0 +1,45 @@
+%div.hidden{id: "edit_participant_form_#{participant.token}", "data-users--panel--edit-participant-target" => "editParticipantForm", "data-reflex-permanent" => "true"}
+  .flex.justify-center.mt-5.mb-4
+    %span.text-xs.font-semibold.text-z-gray-lightbluish
+      Editing participant
+  .flex.flex-auto
+    %span.text-z-gray-lightbluish.w-18.leading-5
+      First Name
+    %input.w-full.block.p-3.mb-4.text-gray-700.h-10.appearance-none.rounded.border.border-gray-200.focus:border-2.focus:border-z-blue{
+      "data-users--panel--edit-participant-target" => "firstNameInput",
+      "data-action"=>"input->users--panel--edit-participant#validateFirstName",
+      value: participant.first_name
+    }
+  %ul.list-disc.list-inside.hidden{"data-users--panel--edit-participant-target" => "firstNameError"}
+    %li.mb-4.text-xs.font-semibold.text-z-red
+      The first name can't be empty
+
+  .flex.flex-auto
+    %span.text-z-gray-lightbluish.w-18.leading-5
+      Last Name
+    %input.w-full.block.p-3.mb-4.text-gray-700.h-10.appearance-none.rounded.border.border-gray-200.focus:border-2.focus:border-z-blue{
+      "data-users--panel--edit-participant-target" => "lastNameInput",
+      "data-action"=>"input->users--panel--edit-participant#validateLastName",
+      value: participant.last_name
+    }
+  %ul.list-disc.list-inside.hidden{"data-users--panel--edit-participant-target" => "lastNameError"}
+    %li.mb-4.text-xs.font-semibold.text-z-red
+      The last name can't be empty
+
+  .flex.flex-auto
+    %span.text-z-gray-lightbluish.w-18.pt-3
+      Role
+    =select_tag "roles", options_for_select(@user.registration_roles, participant.role), data: { "users--panel--edit-participant-target" => "roleInput" }, class: "w-full h-10 pl-3 text-gray-700 appearance-none rounded border border-gray-200 focus:border-2 focus:border-z-blue"
+  %svg.relative.mr-5.float-right{:style => "top:-30px;", :fill => "none", :height => "20", :viewbox => "0 0 11 20", :width => "11"}
+    %path{:d => "M5.5 0L5.03542 0.418063L0 4.87741L0.929155 6L5.5 1.95096L10.0708 6L11 4.87741L5.96458 0.418063L5.5 0Z", :fill => "#39394B"}
+    %path{:d => "M5.5 20L5.96458 19.5819L11 15.1226L10.0708 14L5.5 18.049L0.929156 14L4.26396e-07 15.1226L5.03542 19.5819L5.5 20Z", :fill => "#39394B"}
+  %button.w-full.h-10.mt-2.text-sm.mx-auto.block.leading-6.shadow-z.text-center.text-white.transition.bg-z-blue.rounded-md.ripple.hover:shadow-lg{
+    "data-action" => "click->users--panel--edit-participant#saveParticipant",
+    "data-participant_token" => participant.token,
+    "data-involves-zoom-sdk" => "true"
+  }
+    Save
+  %button.w-full.h-10.mt-2.text-sm.mx-auto.block.leading-6.shadow-z.text-center.text-xs.text-gray-400.border.border-grey-light.rounded-md.bg-white.hover:bg-z-gray-lightest{
+    "data-action" => "click->users--panel--edit-participant#hideEditParticipantForm",
+  }
+    Cancel

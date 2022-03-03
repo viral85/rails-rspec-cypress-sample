@@ -1,0 +1,82 @@
+.mt-5.pb-10
+  .mx-auto
+    %h1.text-4xl.text-center.font-bold.my-10 Components and samples
+
+  .mx-auto
+
+    -# xyz colors component
+    %h1.text-2xl.font-bold.my-5 Colors
+    = render partial: "users/pages/ui_components/xyz_colors"
+    %div.border.border-gray-100.mt-12
+
+    -# xyz login component
+    %h1.text-2xl.font-bold.mt-24.mb-5 Login
+    = render partial: "users/pages/ui_components/login"
+    %div.border.border-gray-100.mt-12
+
+    -# xyz host name component
+    %h1.text-2xl.font-bold.mt-24.mb-5 Host Name
+    = render partial: "users/pages/ui_components/host_name"
+    %div.border.border-gray-100.mt-12
+
+    -# xyz registration component
+    %h1.text-2xl.font-bold.mt-24.mb-5 Registration
+    = render partial: "users/pages/ui_components/registration"
+    %div.border.border-gray-100.mt-12
+
+    -# xyz participant waiting room component 1
+    %h1.text-2xl.font-bold.mt-24.mb-5 Participant Waiting Room 1
+    = render partial: "users/pages/ui_components/participant_waiting_room_1"
+    %div.border.border-gray-100.mt-12
+
+    -# xyz court waiting room component
+    %h1.text-2xl.font-bold.mt-24.mb-5 Participant Waiting Room (multiple cases)
+    = render partial: "users/pages/ui_components/court_waiting_room"
+    %div.border.border-gray-100.mt-12
+
+    -# xyz case completed component
+    %h1.text-2xl.font-bold.mt-24.mb-5 Case Completed
+    = render partial: "users/pages/ui_components/case_completed"
+    %div.border.border-gray-100.mt-12
+
+
+    -# xyz control panel component
+    %h1.text-2xl.font-bold.mt-24.mb-5 Control Panel Component
+
+
+    .grid.grid-cols-1.gap-4.md:grid-cols-2.xl:grid-cols-3
+
+      .cp-component
+        = render partial: "users/pages/ui_components/control_panel_1"
+
+      .cp-component
+        = render partial: "users/pages/ui_components/control_panel_2"
+
+      .cp-component
+        = render partial: "users/pages/ui_components/control_panel_3"
+
+    -# Site Notification sample
+    %h1.text-2xl.font-bold.mt-24.mb-5 Site Notification
+
+    .bg-gray-100.h-80
+
+      // change position relative to fixed when adding notification
+      .relative.inset-0.flex.items-end.justify-center.px-4.py-6.pointer-events-none.sm:p-6.sm:items-start.sm:justify-end
+        .max-w-sm.w-full.bg-white.shadow-lg.rounded-lg.pointer-events-auto.ring-1.ring-black.ring-opacity-5.overflow-hidden
+          .p-4
+            .flex.items-start
+              .flex-shrink-0
+                / Heroicon name: check-circle
+                %svg.h-6.w-6.text-z-green{"aria-hidden" => "true", fill: "none", stroke: "currentColor", viewbox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg"}
+                  %path{d: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z", "stroke-linecap" => "round", "stroke-linejoin" => "round", "stroke-width" => "2"}
+              .ml-3.w-0.flex-1{class: "pt-0.5"}
+                %p.text-sm.font-medium.text-gray-900
+                  Notification sample, successs!
+                %p.mt-1.text-sm.text-gray-500
+                  More text could be added here if needed.
+              .ml-4.flex-shrink-0.flex
+                %button.bg-white.rounded-md.inline-flex.text-gray-400.hover:text-gray-500.focus:outline-none.focus:ring-2.focus:ring-offset-2.focus:ring-z-blue-light
+                  %span.sr-only Close
+                  / Heroicon name: x
+                  %svg.h-5.w-5{"aria-hidden" => "true", fill: "currentColor", viewbox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg"}
+                    %path{"clip-rule" => "evenodd", d: "M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z", "fill-rule" => "evenodd"}

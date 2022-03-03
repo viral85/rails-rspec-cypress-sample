@@ -1,0 +1,240 @@
+.bg-white.w-full.p-10.shadow-z.rounded-lg
+  .max-w-xs.mx-auto
+    %h1.text-lg.md:text-xl.font-bold.mt-5.mb-2 Search
+    %input.mb-3.pl-8.px-3.w-full.bg-z-gray-lightest.overflow-hidden.leading-9.rounded-md.text-z-gray.text-xs.font-light.h-10.focus:border-z-blue{:type => "text", placeholder: "Search by case number"}
+    %svg.absolute.ml-3{style: "margin-top: -38px;",:height => "12", :viewbox => "0 0 13 12", :width => "13", :xmlns => "http://www.w3.org/2000/svg"}
+      %path{:d => "M12.1656 11.1474L8.83741 7.7349C9.48209 6.91842 9.87025 5.88092 9.87025 4.75094C9.87025 2.13196 7.79188 0.000976562 5.23758 0.000976562C2.68327 0.000976562 0.604919 2.13194 0.604919 4.75092C0.604919 7.36989 2.68329 9.50088 5.2376 9.50088C6.33968 9.50088 7.35156 9.10289 8.14788 8.44189L11.4761 11.8544C11.5712 11.9519 11.696 12.0009 11.8209 12.0009C11.9457 12.0009 12.0706 11.9519 12.1656 11.8544C12.3563 11.6589 12.3563 11.3429 12.1656 11.1474ZM5.2376 8.50088C3.22067 8.50088 1.58023 6.8189 1.58023 4.75092C1.58023 2.68293 3.22067 1.00095 5.2376 1.00095C7.25452 1.00095 8.89497 2.68293 8.89497 4.75092C8.89497 6.8189 7.2545 8.50088 5.2376 8.50088Z", :fill => "#8F98B9"}
+
+    .cases.overflow-scroll{class: "max-h-192"}
+
+      .active-case
+        %h1.text-lg.md:text-xl.font-bold.mt-2.mb-2 Active Case
+        .case-container.bg-z-blue.bg-opacity-10.p-5.mb-3.rounded-md.border.border-z-blue
+          .case-info.mt-1.pb-3.flex.border-b.border-z-blue
+            .case-name.flex-1
+              %h1.text-xl.font-medium Case #AQ8LU
+              %svg.inline-block{:fill => "none", :height => "6", :viewbox => "0 0 6 6", :width => "6", :xmlns => "http://www.w3.org/2000/svg"}
+                %circle{:cx => "3", :cy => "3", :fill => "#37CB4C", :r => "3"}
+              %span.text-xs.font-light.text-z-gray.inline-block.mr-2 2
+              %svg.inline-block{:fill => "none", :height => "6", :viewbox => "0 0 6 6", :width => "6", :xmlns => "http://www.w3.org/2000/svg"}
+                %circle{:cx => "3", :cy => "3", :fill => "#1477FB", :r => "3"}
+              %span.text-xs.font-light.text-z-gray.inline-block.mr-2 1
+
+            .meeting-time.flex-1
+              %a.block.mt-1.text-sm.text-z-blue.font-light.text-right 00:20:05
+
+
+          .participants-list.mt-4
+            .partipant.flex.mb-2
+              .participant-info.w-24.flex-auto
+                %svg.inline-block{:fill => "none", :height => "6", :viewbox => "0 0 6 6", :width => "6", :xmlns => "http://www.w3.org/2000/svg"}
+                  %circle{:cx => "3", :cy => "3", :fill => "#37CB4C", :r => "3"}
+                %span.text-md.font-light.font-medium.relative Alf Spencer
+                %span.text-xs.font-light.text-z-gray.block Defense Attorney
+              .time-online.flex-auto
+                .time.mx-auto.block.text-center
+                  %svg.inline-block{:fill => "none", :height => "10", :viewbox => "0 0 10 10", :width => "10", :xmlns => "http://www.w3.org/2000/svg"}
+                    %path{:d => "M5 0C2.24307 0 0 2.24295 0 5C0 7.75705 2.24307 10 5 10C7.75705 10 10 7.75705 10 5C10 2.24295 7.75693 0 5 0ZM5 9.27008C2.64551 9.27008 0.729922 7.35449 0.729922 5C0.729922 2.64551 2.64551 0.729922 5 0.729922C7.35449 0.729922 9.27008 2.64549 9.27008 4.99988C9.27008 7.35449 7.35449 9.27008 5 9.27008Z", :fill => "#8F98B9"}
+                    %path{:d => "M6.70315 4.99981H5.12165V2.81003C5.12165 2.60845 4.95827 2.44507 4.75668 2.44507C4.5551 2.44507 4.39172 2.60845 4.39172 2.81003V5.36478C4.39172 5.56636 4.5551 5.72974 4.75668 5.72974H6.70315C6.90473 5.72974 7.06811 5.56636 7.06811 5.36478C7.06811 5.16319 6.90473 4.99981 6.70315 4.99981Z", :fill => "#8F98B9"}
+                  %span.text-xs.font-light.text-z-gray 5 min
+              .participant-options-btn.flex-auto{"data-controller" => "dropdown"}
+                %a.float-right.cursor-pointer{"data-action" => "click->dropdown#toggle click@window->dropdown#hide"}
+                  %svg.-mt-2{:fill => "none", :height => "50", :viewbox => "0 0 50 50", :width => "50", :xmlns => "http://www.w3.org/2000/svg"}
+                    %g{:filter => "url(#filter0_d)"}
+                      %circle{:cx => "25", :cy => "25", :fill => "white", :r => "14"}
+                    %path{:d => "M25 27.3635L25.3379 27.0595L29 23.8163L28.3243 22.9999L25 25.9446L21.6757 22.9999L21 23.8163L24.6621 27.0595L25 27.3635Z", :fill => "#8F98B9"}
+                    %defs
+                      %filter#filter0_d{"color-interpolation-filters" => "sRGB", :filterunits => "userSpaceOnUse", :height => "50", :width => "50", :x => "0", :y => "0"}
+                        %feflood{"flood-opacity" => "0", :result => "BackgroundImageFix"}
+                        %fecolormatrix{:in => "SourceAlpha", :type => "matrix", :values => "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"}
+                        %feoffset
+                        %fegaussianblur{:stddeviation => "5.5"}
+                        %fecolormatrix{:type => "matrix", :values => "0 0 0 0 0.0784314 0 0 0 0 0.466667 0 0 0 0 0.984314 0 0 0 0.11 0"}
+                        %feblend{:in2 => "BackgroundImageFix", :mode => "normal", :result => "effect1_dropShadow"}
+                        %feblend{:in => "SourceGraphic", :in2 => "effect1_dropShadow", :mode => "normal", :result => "shape"}
+
+                .absolute.right-0.mt-2.hidden{"data-dropdown-target" => "menu"}
+                  .bg-white.shadow.rounded.border.overflow-hidden.rounded-lg.py-2
+                    %a.text-sm.no-underline.block.px-4.py-1.text-z-blue.bg-white.hover:bg-z-blue.hover:bg-opacity-10.whitespace-no-wrap Place into the waiting room
+                    %a.text-sm.no-underline.block.px-4.py-1.text-z-red.bg-white.hover:bg-z-red.hover:bg-opacity-10.whitespace-no-wrap Remove from meeting
+
+
+
+            .partipant.flex.mb-2
+              .participant-info.w-24.flex-auto
+                %svg.inline-block{:fill => "none", :height => "6", :viewbox => "0 0 6 6", :width => "6", :xmlns => "http://www.w3.org/2000/svg"}
+                  %circle{:cx => "3", :cy => "3", :fill => "#37CB4C", :r => "3"}
+                %span.text-md.font-light.font-medium.relative Ella Huels
+                %span.text-xs.font-light.text-z-gray.block Defendant
+              .time-online.flex-auto
+                .time.mx-auto.block.text-center
+                  %svg.inline-block{:fill => "none", :height => "10", :viewbox => "0 0 10 10", :width => "10", :xmlns => "http://www.w3.org/2000/svg"}
+                    %path{:d => "M5 0C2.24307 0 0 2.24295 0 5C0 7.75705 2.24307 10 5 10C7.75705 10 10 7.75705 10 5C10 2.24295 7.75693 0 5 0ZM5 9.27008C2.64551 9.27008 0.729922 7.35449 0.729922 5C0.729922 2.64551 2.64551 0.729922 5 0.729922C7.35449 0.729922 9.27008 2.64549 9.27008 4.99988C9.27008 7.35449 7.35449 9.27008 5 9.27008Z", :fill => "#8F98B9"}
+                    %path{:d => "M6.70315 4.99981H5.12165V2.81003C5.12165 2.60845 4.95827 2.44507 4.75668 2.44507C4.5551 2.44507 4.39172 2.60845 4.39172 2.81003V5.36478C4.39172 5.56636 4.5551 5.72974 4.75668 5.72974H6.70315C6.90473 5.72974 7.06811 5.56636 7.06811 5.36478C7.06811 5.16319 6.90473 4.99981 6.70315 4.99981Z", :fill => "#8F98B9"}
+                  %span.text-xs.font-light.text-z-gray 5 min
+              .participant-options-btn.flex-auto{"data-controller" => "dropdown"}
+                %a.float-right.cursor-pointer{"data-action" => "click->dropdown#toggle click@window->dropdown#hide"}
+                  %svg.-mt-2{:fill => "none", :height => "50", :viewbox => "0 0 50 50", :width => "50", :xmlns => "http://www.w3.org/2000/svg"}
+                    %g{:filter => "url(#filter0_d)"}
+                      %circle{:cx => "25", :cy => "25", :fill => "white", :r => "14"}
+                    %path{:d => "M25 27.3635L25.3379 27.0595L29 23.8163L28.3243 22.9999L25 25.9446L21.6757 22.9999L21 23.8163L24.6621 27.0595L25 27.3635Z", :fill => "#8F98B9"}
+                    %defs
+                      %filter#filter0_d{"color-interpolation-filters" => "sRGB", :filterunits => "userSpaceOnUse", :height => "50", :width => "50", :x => "0", :y => "0"}
+                        %feflood{"flood-opacity" => "0", :result => "BackgroundImageFix"}
+                        %fecolormatrix{:in => "SourceAlpha", :type => "matrix", :values => "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"}
+                        %feoffset
+                        %fegaussianblur{:stddeviation => "5.5"}
+                        %fecolormatrix{:type => "matrix", :values => "0 0 0 0 0.0784314 0 0 0 0 0.466667 0 0 0 0 0.984314 0 0 0 0.11 0"}
+                        %feblend{:in2 => "BackgroundImageFix", :mode => "normal", :result => "effect1_dropShadow"}
+                        %feblend{:in => "SourceGraphic", :in2 => "effect1_dropShadow", :mode => "normal", :result => "shape"}
+
+                .absolute.right-0.mt-2.hidden{"data-dropdown-target" => "menu"}
+                  .bg-white.shadow.rounded.border.overflow-hidden.rounded-lg.py-2
+                    %a.text-sm.no-underline.block.px-4.py-1.text-z-blue.bg-white.hover:bg-z-blue.hover:bg-opacity-10.whitespace-no-wrap Place into the waiting room
+                    %a.text-sm.no-underline.block.px-4.py-1.text-z-red.bg-white.hover:bg-z-red.hover:bg-opacity-10.whitespace-no-wrap Remove from meeting
+
+            .partipant.flex.mb-2
+              .participant-info.w-24.flex-auto
+                %svg.inline-block{:fill => "none", :height => "6", :viewbox => "0 0 6 6", :width => "6", :xmlns => "http://www.w3.org/2000/svg"}
+                  %circle{:cx => "3", :cy => "3", :fill => "#1477FB", :r => "3"}
+                %span.text-md.font-light.font-medium.relative Janick Ritchie
+                %span.text-xs.font-light.text-z-gray.block Witness
+              .time-online.flex-auto
+                .time.mx-auto.block.text-center
+                  %svg.inline-block{:fill => "none", :height => "10", :viewbox => "0 0 10 10", :width => "10", :xmlns => "http://www.w3.org/2000/svg"}
+                    %path{:d => "M5 0C2.24307 0 0 2.24295 0 5C0 7.75705 2.24307 10 5 10C7.75705 10 10 7.75705 10 5C10 2.24295 7.75693 0 5 0ZM5 9.27008C2.64551 9.27008 0.729922 7.35449 0.729922 5C0.729922 2.64551 2.64551 0.729922 5 0.729922C7.35449 0.729922 9.27008 2.64549 9.27008 4.99988C9.27008 7.35449 7.35449 9.27008 5 9.27008Z", :fill => "#8F98B9"}
+                    %path{:d => "M6.70315 4.99981H5.12165V2.81003C5.12165 2.60845 4.95827 2.44507 4.75668 2.44507C4.5551 2.44507 4.39172 2.60845 4.39172 2.81003V5.36478C4.39172 5.56636 4.5551 5.72974 4.75668 5.72974H6.70315C6.90473 5.72974 7.06811 5.56636 7.06811 5.36478C7.06811 5.16319 6.90473 4.99981 6.70315 4.99981Z", :fill => "#8F98B9"}
+                  %span.text-xs.font-light.text-z-gray 5 min
+              .participant-options-btn.flex-auto{"data-controller" => "dropdown"}
+                %a.float-right.cursor-pointer{"data-action" => "click->dropdown#toggle click@window->dropdown#hide"}
+                  %svg.-mt-2{:fill => "none", :height => "50", :viewbox => "0 0 50 50", :width => "50", :xmlns => "http://www.w3.org/2000/svg"}
+                    %g{:filter => "url(#filter0_d)"}
+                      %circle{:cx => "25", :cy => "25", :fill => "white", :r => "14"}
+                    %path{:d => "M25 27.3635L25.3379 27.0595L29 23.8163L28.3243 22.9999L25 25.9446L21.6757 22.9999L21 23.8163L24.6621 27.0595L25 27.3635Z", :fill => "#8F98B9"}
+                    %defs
+                      %filter#filter0_d{"color-interpolation-filters" => "sRGB", :filterunits => "userSpaceOnUse", :height => "50", :width => "50", :x => "0", :y => "0"}
+                        %feflood{"flood-opacity" => "0", :result => "BackgroundImageFix"}
+                        %fecolormatrix{:in => "SourceAlpha", :type => "matrix", :values => "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"}
+                        %feoffset
+                        %fegaussianblur{:stddeviation => "5.5"}
+                        %fecolormatrix{:type => "matrix", :values => "0 0 0 0 0.0784314 0 0 0 0 0.466667 0 0 0 0 0.984314 0 0 0 0.11 0"}
+                        %feblend{:in2 => "BackgroundImageFix", :mode => "normal", :result => "effect1_dropShadow"}
+                        %feblend{:in => "SourceGraphic", :in2 => "effect1_dropShadow", :mode => "normal", :result => "shape"}
+
+                .absolute.right-0.mt-2.hidden{"data-dropdown-target" => "menu"}
+                  .bg-white.shadow.rounded.border.overflow-hidden.rounded-lg.py-2
+                    %a.text-sm.no-underline.block.px-4.py-1.text-z-blue.bg-white.hover:bg-z-blue.hover:bg-opacity-10.whitespace-no-wrap Place into the waiting room
+                    %a.text-sm.no-underline.block.px-4.py-1.text-z-red.bg-white.hover:bg-z-red.hover:bg-opacity-10.whitespace-no-wrap Remove from meeting
+
+          %button.w-full.mt-4.px-14.py-3.mx-auto.block.leading-6.shadow-z.text-center.text-white.transition.bg-z-red.rounded-md.ripple.hover:shadow-lg.hover:bg-z-red-light.focus:outline-none
+            End Case
+
+
+      .upcoming-cases
+        %h1.text-lg.md:text-xl.font-bold.mt-5.mb-2 Upcoming Cases
+
+        .case-container.bg-z-gray-lightest.p-5.mb-3.rounded-md
+          .case-info.mt-1.pb-3.flex.border-b.border-z-gray.border-opacity-10
+            .case-name.flex-1
+              %h1.text-xl.font-medium Case #CE01N
+              %svg.inline-block{:fill => "none", :height => "6", :viewbox => "0 0 6 6", :width => "6", :xmlns => "http://www.w3.org/2000/svg"}
+                %circle{:cx => "3", :cy => "3", :fill => "#1477FB", :r => "3"}
+              %span.text-xs.font-light.text-z-gray 2
+
+            .participants-options.flex-1
+              %a.block.mt-1.text-xs.text-z-blue.font-light.underline.text-right Hide Participants
+
+          .participants-list.mt-4
+            .partipant.flex.mb-2
+              .participant-info.w-24.flex-auto
+                %svg.inline-block{:fill => "none", :height => "6", :viewbox => "0 0 6 6", :width => "6", :xmlns => "http://www.w3.org/2000/svg"}
+                  %circle{:cx => "3", :cy => "3", :fill => "#1477FB", :r => "3"}
+                %span.text-md.font-light.font-medium.relative Alf Spencer
+                %span.text-xs.font-light.text-z-gray.block Defense Attorney
+              .time-online.flex-auto
+                .time.mx-auto.block.text-center
+                  %svg.inline-block{:fill => "none", :height => "10", :viewbox => "0 0 10 10", :width => "10", :xmlns => "http://www.w3.org/2000/svg"}
+                    %path{:d => "M5 0C2.24307 0 0 2.24295 0 5C0 7.75705 2.24307 10 5 10C7.75705 10 10 7.75705 10 5C10 2.24295 7.75693 0 5 0ZM5 9.27008C2.64551 9.27008 0.729922 7.35449 0.729922 5C0.729922 2.64551 2.64551 0.729922 5 0.729922C7.35449 0.729922 9.27008 2.64549 9.27008 4.99988C9.27008 7.35449 7.35449 9.27008 5 9.27008Z", :fill => "#8F98B9"}
+                    %path{:d => "M6.70315 4.99981H5.12165V2.81003C5.12165 2.60845 4.95827 2.44507 4.75668 2.44507C4.5551 2.44507 4.39172 2.60845 4.39172 2.81003V5.36478C4.39172 5.56636 4.5551 5.72974 4.75668 5.72974H6.70315C6.90473 5.72974 7.06811 5.56636 7.06811 5.36478C7.06811 5.16319 6.90473 4.99981 6.70315 4.99981Z", :fill => "#8F98B9"}
+                  %span.text-xs.font-light.text-z-gray 5 min
+              .participant-options-btn.flex-auto
+                %a.float-right.cursor-pointer
+                  %svg.-mt-2{:fill => "none", :height => "50", :viewbox => "0 0 50 50", :width => "50", :xmlns => "http://www.w3.org/2000/svg"}
+                    %g{:filter => "url(#filter0_d)"}
+                      %circle{:cx => "25", :cy => "25", :fill => "white", :r => "14"}
+                    %rect{:height => "6.27586", :stroke => "#8F98B9", "stroke-width" => "0.482759", :width => "0.482759", :x => "24.759", :y => "21.862"}
+                    %rect{:height => "6.61807", :stroke => "#8F98B9", "stroke-width" => "0.482759", :transform => "rotate(90 28.4805 24.7587)", :width => "0.482759", :x => "28.4805", :y => "24.7587"}
+                    %defs
+                      %filter#filter0_d{"color-interpolation-filters" => "sRGB", :filterunits => "userSpaceOnUse", :height => "50", :width => "50", :x => "0", :y => "0"}
+                        %feflood{"flood-opacity" => "0", :result => "BackgroundImageFix"}
+                        %fecolormatrix{:in => "SourceAlpha", :type => "matrix", :values => "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"}
+                        %feoffset
+                        %fegaussianblur{:stddeviation => "5.5"}
+                        %fecolormatrix{:type => "matrix", :values => "0 0 0 0 0.0784314 0 0 0 0 0.466667 0 0 0 0 0.984314 0 0 0 0.11 0"}
+                        %feblend{:in2 => "BackgroundImageFix", :mode => "normal", :result => "effect1_dropShadow"}
+                        %feblend{:in => "SourceGraphic", :in2 => "effect1_dropShadow", :mode => "normal", :result => "shape"}
+
+            .partipant.flex.mb-2
+              .participant-info.w-24.flex-auto
+                %svg.inline-block{:fill => "none", :height => "6", :viewbox => "0 0 6 6", :width => "6", :xmlns => "http://www.w3.org/2000/svg"}
+                  %circle{:cx => "3", :cy => "3", :fill => "#1477FB", :r => "3"}
+                %span.text-md.font-light.font-medium.relative Ella Huels
+                %span.text-xs.font-light.text-z-gray.block Defendant
+              .time-online.flex-auto
+                .time.mx-auto.block.text-center
+                  %svg.inline-block{:fill => "none", :height => "10", :viewbox => "0 0 10 10", :width => "10", :xmlns => "http://www.w3.org/2000/svg"}
+                    %path{:d => "M5 0C2.24307 0 0 2.24295 0 5C0 7.75705 2.24307 10 5 10C7.75705 10 10 7.75705 10 5C10 2.24295 7.75693 0 5 0ZM5 9.27008C2.64551 9.27008 0.729922 7.35449 0.729922 5C0.729922 2.64551 2.64551 0.729922 5 0.729922C7.35449 0.729922 9.27008 2.64549 9.27008 4.99988C9.27008 7.35449 7.35449 9.27008 5 9.27008Z", :fill => "#8F98B9"}
+                    %path{:d => "M6.70315 4.99981H5.12165V2.81003C5.12165 2.60845 4.95827 2.44507 4.75668 2.44507C4.5551 2.44507 4.39172 2.60845 4.39172 2.81003V5.36478C4.39172 5.56636 4.5551 5.72974 4.75668 5.72974H6.70315C6.90473 5.72974 7.06811 5.56636 7.06811 5.36478C7.06811 5.16319 6.90473 4.99981 6.70315 4.99981Z", :fill => "#8F98B9"}
+                  %span.text-xs.font-light.text-z-gray 5 min
+              .participant-options-btn.flex-auto
+                %a.float-right.cursor-pointer
+                  %svg.-mt-2{:fill => "none", :height => "50", :viewbox => "0 0 50 50", :width => "50", :xmlns => "http://www.w3.org/2000/svg"}
+                    %g{:filter => "url(#filter0_d)"}
+                      %circle{:cx => "25", :cy => "25", :fill => "white", :r => "14"}
+                    %rect{:height => "6.27586", :stroke => "#8F98B9", "stroke-width" => "0.482759", :width => "0.482759", :x => "24.759", :y => "21.862"}
+                    %rect{:height => "6.61807", :stroke => "#8F98B9", "stroke-width" => "0.482759", :transform => "rotate(90 28.4805 24.7587)", :width => "0.482759", :x => "28.4805", :y => "24.7587"}
+                    %defs
+                      %filter#filter0_d{"color-interpolation-filters" => "sRGB", :filterunits => "userSpaceOnUse", :height => "50", :width => "50", :x => "0", :y => "0"}
+                        %feflood{"flood-opacity" => "0", :result => "BackgroundImageFix"}
+                        %fecolormatrix{:in => "SourceAlpha", :type => "matrix", :values => "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"}
+                        %feoffset
+                        %fegaussianblur{:stddeviation => "5.5"}
+                        %fecolormatrix{:type => "matrix", :values => "0 0 0 0 0.0784314 0 0 0 0 0.466667 0 0 0 0 0.984314 0 0 0 0.11 0"}
+                        %feblend{:in2 => "BackgroundImageFix", :mode => "normal", :result => "effect1_dropShadow"}
+                        %feblend{:in => "SourceGraphic", :in2 => "effect1_dropShadow", :mode => "normal", :result => "shape"}
+
+
+          %button.w-full.mt-4.px-14.py-3.mx-auto.block.leading-6.shadow-z.text-center.text-white.transition.bg-z-blue.rounded-md.ripple.hover:shadow-lg.opacity-10
+            Start Case
+
+
+        .case-container.bg-z-gray-lightest.p-5.mb-3.rounded-md
+          .case-info.mt-1.pb-3.flex.border-b.border-z-gray.border-opacity-10
+            .case-name.flex-1
+              %h1.text-xl.font-medium Case #Z1PU2
+              %svg.inline-block{:fill => "none", :height => "6", :viewbox => "0 0 6 6", :width => "6", :xmlns => "http://www.w3.org/2000/svg"}
+                %circle{:cx => "3", :cy => "3", :fill => "#1477FB", :r => "3"}
+              %span.text-xs.font-light.text-z-gray 2
+
+            .participants-options.flex-1
+              %a.block.mt-1.text-xs.text-z-blue.font-light.underline.text-right View Participants
+
+
+          %button.w-full.mt-4.px-14.py-3.mx-auto.block.leading-6.shadow-z.text-center.text-white.transition.bg-z-blue.rounded-md.ripple.hover:shadow-lg.opacity-10
+            Start Case
+
+
+        .case-container.bg-z-gray-lightest.p-5.mb-3.rounded-md
+          .case-info.mt-1.pb-3.flex.border-b.border-z-gray.border-opacity-10
+            .case-name.flex-1
+              %h1.text-xl.font-medium Case #FTOY8
+              %svg.inline-block{:fill => "none", :height => "6", :viewbox => "0 0 6 6", :width => "6", :xmlns => "http://www.w3.org/2000/svg"}
+                %circle{:cx => "3", :cy => "3", :fill => "#1477FB", :r => "3"}
+              %span.text-xs.font-light.text-z-gray 2
+
+            .participants-options.flex-1
+              %a.block.mt-1.text-xs.text-z-blue.font-light.underline.text-right View Participants
+
+
+          %button.w-full.mt-4.px-14.py-3.mx-auto.block.leading-6.shadow-z.text-center.text-white.transition.bg-z-blue.rounded-md.ripple.hover:shadow-lg.opacity-10
+            Start Case

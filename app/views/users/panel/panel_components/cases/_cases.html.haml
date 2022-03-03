@@ -1,0 +1,31 @@
+#no-cases-message{class: ("hidden" if @user.display_cases?), "data-cy" => "no-cases-message-container" }
+  .container.relative.z-20
+    .max-w-sm.mx-auto
+      %p.mb-1.mt-8.text-center.text-z-gray.font-light.text-lg.md:text-xl
+        There are currently no cases with participants in the waiting room.
+#cases-content{
+  "data-controller" => "users--panel--cases",
+  class: ("hidden" if !@user.display_cases?), "data-cy" => "cases-content",
+  "data-users--panel--host-panel-target" => "casesPanel"
+}
+  #search-background.px-4.pt-2.pb-3.relative.z-20{
+    class: "#{@filtered_court_cases&.count&.positive? || @search_query.present? ? 'bg-z-gray-lightest' : 'bg-white'}"
+  }
+    .max-w-sm.mx-auto
+      #search-field-block.case-container.rounded-md{ "data-reflex-permanent"=>"true", "data-controller" => "users--panel--search" }
+        = render partial: "users/panel/panel_components/cases/search_field_component", locals: { search_query: @search_query }
+
+    .px-4.relative.bg-z-gray-lightest
+      .max-w-sm.mx-auto
+        #search-results{ "data-cy" => "search-results" }
+          = render partial: "users/panel/panel_components/cases/searched_cases_component", locals: { filtered_court_cases: @filtered_court_cases, search_query: @search_query }
+
+  .px-4.relative.z-20
+    .max-w-sm.mx-auto
+      #active-case{ "data-cy" => "active-case" }
+        = render partial: "users/panel/panel_components/cases/active_case_component", locals: { court_case: @user.active_case }
+
+  .px-4.relative.z-10
+    .max-w-sm.mx-auto
+      #upcoming-cases{ "data-cy" => "upcoming-cases" }
+        = render partial: "users/panel/panel_components/cases/upcoming_cases_component"

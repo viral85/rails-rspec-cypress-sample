@@ -1,0 +1,21 @@
+%div{class: "nested-fields mb-5 pb-5 md:pb-0 md:mb-0 border-b-2 md:border-b-0 border-gray-200", "data-reflex-permanent" => true}
+  = f.hidden_field :_destroy
+  = f.text_field :case_number, class: "case-input block form-input w-full p-3 mt-1 mb-2 text-gray-700 appearance-none rounded border border-gray-200 focus:border-2 focus:border-z-blue", "data-action"=>"debounced:input->participants--registration#validateCourtCase input->participants--registration#showLoadSpinner", "data-reflex-permanent" => true
+  .success-validation.hidden
+    %svg.relative.mr-4.float-right{:style => "top:-43px; margin-bottom: -20px;", :fill => "none", :height => "20", :viewbox => "0 0 24 20", :width => "24", :xmlns => "http://www.w3.org/2000/svg"}
+      %path{:d => "M20 10C20 15.5228 15.5228 20 10 20C4.47715 20 0 15.5228 0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10Z", :fill => "#1477FB", :opacity => "0.2"}
+      %path{:d => "M6.25 9.67573L9.28806 12.5L11.519 10L13.75 7.5", :stroke => "#1477FB"}
+
+  .load-spinner.hidden
+    %svg.animate-spin.-ml-1.mr-3.h-5.w-5.text-white.relative.mr-4.float-right{:style => "top:-43px; margin-bottom: -20px;", :fill => "none", :viewbox => "0 0 24 24", :xmlns => "http://www.w3.org/2000/svg"}
+      %circle.opacity-25{:cx => "12", :cy => "12", :r => "10", :stroke => "#000", "stroke-width" => "4"}
+      %path.opacity-75{:d => "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z", :fill => "#1477FB"}
+
+  %div{class:"remove-button relative md:-mr-32 block md:-top-10", style: "", "data-action" => "click->participants--registration#removeAssociation"}
+    %p{class: "block md:ml-2 md:float-right text-sm text-z-red font-light inline-block"} Remove Case
+    %svg{class: "block md:float-right inline-block", :fill => "none", :height => "20", :viewbox => "0 0 20 20", :width => "20", :xmlns => "http://www.w3.org/2000/svg"}
+      %path{:d => "M20 10C20 15.5228 15.5228 20 10 20C4.47715 20 0 15.5228 0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10Z", :fill => "#FA6949", :opacity => "0.2"}
+      %rect{:height => "6.5", :stroke => "#FA6949", "stroke-width" => "0.5", :transform => "rotate(45 12.1213 7.47416)", :width => "0.5", :x => "12.1213", :y => "7.47416"}
+      %rect{:height => "6.5", :stroke => "#FA6949", "stroke-width" => "0.5", :transform => "rotate(135 12.4753 12.0713)", :width => "0.5", :x => "12.4753", :y => "12.0713"}
+
+  %p.invalid-notice.block.mt-1.mb-2.text-sm.text-z-red.font-light.hidden The case number is not valid
